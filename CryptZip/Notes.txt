@@ -1,0 +1,2 @@
+﻿- weryfikacja poprawności klucza (obecnie zawiesza program)
+- dispose
