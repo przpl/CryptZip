@@ -1,2 +1,9 @@
 ﻿- weryfikacja poprawności klucza (obecnie zawiesza program)
 - dispose
+- optymalizacja zapisu znaków w LZ78 (3 bity oznaczające liczbę bitów, a potem dopiero indeks)
+- LZ78 optymalizacja wydajności: null zamiast Root gdy nie znaleziono
+- LZW optymalizacja trie, skoro pierwszy poziom (dzieci roota) są wypisane wszystkie <0;255> to zamiast szukać dla roota, wystarczy przejść pod odpowiedni indeks
+spod tablicy
+- LZ78 oraz LZW dynamiczna liczba bitów potrzebna do zapisu indeksu, w zależności od aktualnego rozmiaru słownika, słownik rośnie 512, 1024, 2048 itp.
+
+- LZW: do węzła dodajemy ojca spod indeksu, a do wyjścia wypisujemy po kolei w dół wszystkie węzły zaczynając od indeksu

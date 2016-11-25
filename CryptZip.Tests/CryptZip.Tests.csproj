@@ -63,6 +63,7 @@
     <Compile Include="CompressionPackerTests.cs" />
     <Compile Include="Compression\BitReaderTests.cs" />
     <Compile Include="Compression\BitWriterTests.cs" />
+    <Compile Include="Compression\LZWTests.cs" />
     <Compile Include="Compression\SlidingBufferTests.cs" />
     <Compile Include="EncryptionPackerTests.cs" />
     <Compile Include="Encryption\ByteWriterTests.cs" />

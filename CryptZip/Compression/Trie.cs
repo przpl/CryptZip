@@ -43,7 +43,7 @@ namespace CryptZip.Compression
             NextNodeIndex++;
         }
 
-        public TrieNode FindChild(byte b)
+        public TrieNode FindRootChild(byte b)
         {
             return FindChild(_root, b);
         }

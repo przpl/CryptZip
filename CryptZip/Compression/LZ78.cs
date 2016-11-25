@@ -10,7 +10,6 @@ namespace CryptZip.Compression
         private Trie _trie;
         private IndexableTrie _indexableTrie;
         private Stream _input, _output;
-        private long _index;
 
         public void Compress(Stream input, Stream output)
         {
@@ -28,20 +27,18 @@ namespace CryptZip.Compression
 
         private bool DataNotEnded()
         {
-            return _index < _input.Length;
+            return _input.Position < _input.Length;
         }
 
         private void CompressNextString()
         {
             byte next = Convert.ToByte(_input.ReadByte());
 
-            TrieNode node = _trie.FindChild(next);
+            TrieNode node = _trie.FindRootChild(next);
             TrieNode lastNode = null;
-            int offset = 0;
 
-            while (!Trie.IsRoot(node) && _index + offset < _input.Length - 1)
+            while (!Trie.IsRoot(node) && DataNotEnded()) // null zamiast root?
             {
-                offset++;
                 next = Convert.ToByte(_input.ReadByte());
                 lastNode = node;
                 node = _trie.FindChild(node, next);
@@ -51,8 +48,6 @@ namespace CryptZip.Compression
                 WriteToken(lastNode, next);
             else
                 WriteToken(node, next);
-
-            _index += offset + 1;
         }
 
         private void Finalize()
