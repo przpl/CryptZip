@@ -38,9 +38,9 @@ namespace CryptZip.Compression
             //    _trie.Add(i);
             _trie.Add(1);
             _trie.Add(2);
-            _trie.Add(3);
-            _trie.Add(4);
-            _trie.Add(5);
+            //_trie.Add(3);
+            //_trie.Add(4);
+            //_trie.Add(5);
         }
 
         private bool DataNotEnded()
@@ -90,21 +90,9 @@ namespace CryptZip.Compression
 
             _indexableTrie.Add(1);
             _indexableTrie.Add(2);
-            _indexableTrie.Add(3);
-            _indexableTrie.Add(4);
-            _indexableTrie.Add(5);
-
-            //while (bitReader.BytesLeft > 1)
-            //{
-            //    int bitsPerIndex = BitConverter.ToInt(bitReader.Read(5)) + 1;
-            //    int index = BitConverter.ToInt(bitReader.Read(bitsPerIndex));
-            //    byte symbol = BitConverter.ToByte(bitReader.Read(8));
-
-            //    if (IsOneCharString(index))
-            //        ReadSymbol(symbol);
-            //    else
-            //        ReadSymbols(index, symbol);
-            //}
+            //_indexableTrie.Add(3);
+            //_indexableTrie.Add(4);
+            //_indexableTrie.Add(5);
 
             byte next = Convert.ToByte(_input.ReadByte());
             byte last = next;
@@ -112,23 +100,20 @@ namespace CryptZip.Compression
             while (DataNotEnded())
             {
                 next = Convert.ToByte(_input.ReadByte());
-                if (next < 6) // < 256
-                {
-                    var node = _indexableTrie[last];
-                    _indexableTrie.Add(node, next);
-                    _output.WriteByte(next);
-                }
-                else
-                {
-                    var node = _indexableTrie[last];
-                    byte symbolFromTrie = GetSymbol(_indexableTrie[next]);
-                    _indexableTrie.Add(node, symbolFromTrie);
-                    
-                    // odczyt od najwyższego poziomu do danego węzła i wypisanie na wyjściu
-                    GetBytes(node);
-                }
+
+                var lastNode = _indexableTrie[last];
+
+                byte symbolFromTrie = GetSymbol(_indexableTrie[next]);
+                _indexableTrie.Add(lastNode, symbolFromTrie);
+
+                // odczyt od najwyższego poziomu do danego węzła i wypisanie na wyjściu
+                GetBytes(_indexableTrie[_indexableTrie.Count].Parent);
+
                 last = next;
             }
+
+            GetBytes(_indexableTrie[next].Parent);
+            _output.WriteByte(_indexableTrie[next].Value);
 
             _output.Flush();
         }
@@ -136,7 +121,7 @@ namespace CryptZip.Compression
         private void GetBytes(TrieNode node)
         {
             var stack = new Stack<byte>();
-            while (node.Parent.Index != 0) // funkcja is root
+            while (node.Index != 0) // funkcja is root
             {
                 stack.Push(node.Value);
                 node = node.Parent;
