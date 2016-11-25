@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 
 namespace CryptZip.Compression
 {
@@ -115,12 +116,16 @@ namespace CryptZip.Compression
                 {
                     var node = _indexableTrie[last];
                     _indexableTrie.Add(node, next);
+                    _output.WriteByte(next);
                 }
                 else
                 {
                     var node = _indexableTrie[last];
                     byte symbolFromTrie = GetSymbol(_indexableTrie[next]);
                     _indexableTrie.Add(node, symbolFromTrie);
+                    
+                    // odczyt od najwyższego poziomu do danego węzła i wypisanie na wyjściu
+                    GetBytes(node);
                 }
                 last = next;
             }
@@ -128,6 +133,20 @@ namespace CryptZip.Compression
             _output.Flush();
         }
 
+        private void GetBytes(TrieNode node)
+        {
+            var stack = new Stack<byte>();
+            while (node.Parent.Index != 0) // funkcja is root
+            {
+                stack.Push(node.Value);
+                node = node.Parent;
+            }
+
+            while (stack.Any())
+            {
+                _output.WriteByte(stack.Pop());
+            }
+        }
 
         private byte GetSymbol(TrieNode node)
         {
@@ -150,7 +169,7 @@ namespace CryptZip.Compression
         //_indexableTrie.Add(node, _next);
         //    }
 
-    private bool IsOneCharString(int index)
+        private bool IsOneCharString(int index)
         {
             return index == 0;
         }
