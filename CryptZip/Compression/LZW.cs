@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
@@ -13,6 +12,8 @@ namespace CryptZip.Compression
         private IndexableTrie _indexableTrie;
         private Stream _input, _output;
         private byte _next;
+
+        private const int _bitsPerToken = 12;
 
         public void Compress(Stream input, Stream output)
         {
@@ -29,18 +30,15 @@ namespace CryptZip.Compression
             while (DataNotEnded())
                 CompressNextString();
 
+            //debugStream.Close();
+
             Finalize();
         }
 
         private void BuildTrie()
         {
-            //for (byte i = 0; i < Byte.MaxValue; i++)
-            //    _trie.Add(i);
-            _trie.Add(1);
-            _trie.Add(2);
-            //_trie.Add(3);
-            //_trie.Add(4);
-            //_trie.Add(5);
+            for (int i = 0; i < 256; i++)
+                _trie.Add(Convert.ToByte(i));
         }
 
         private bool DataNotEnded()
@@ -64,6 +62,10 @@ namespace CryptZip.Compression
                 WriteToken(lastNode, _next);
             else
                 WriteToken(node, _next);
+
+            // zapis ostatniego znaku
+            if (!DataNotEnded())
+                _bitWriter.Write(BitConverter.ToBits(_next, 8));
         }
 
         private void Finalize()
@@ -72,13 +74,19 @@ namespace CryptZip.Compression
             _trie.Dispose();
         }
 
+        //private StreamWriter debugStream = new StreamWriter(@"E:\tokens.txt");
+
         private void WriteToken(TrieNode lastNode, byte symbol)
         {
             _trie.Add(lastNode, symbol);
-            //_bitWriter.Write(BitConverter.ToBits(BitConverter.MinimalNumberOfBits(lastNode.Index) - 1, 5));
-            _bitWriter.Write(BitConverter.ToBits(lastNode.Index, 8)); // , 8 tylko do testów
-            Debug.WriteLine(lastNode.Index);
+            // liczba bitów na indeks, indeks (5 oznacza maksymalnie 32-bitowe indeksy)
+            //_bitWriter.Write(BitConverter.ToBits(BitConverter.MinimalNumberOfBits(lastNode.Index), 5));
+            _bitWriter.Write(BitConverter.ToBits(lastNode.Index, _bitsPerToken));
+            //debugStream.WriteLine(lastNode.Index);
         }
+
+        private BitReader _bitReader;
+        private byte lastSymbol;
 
         public void Decompress(Stream input, Stream output)
         {
@@ -86,24 +94,26 @@ namespace CryptZip.Compression
             _output = output;
 
             _indexableTrie = new IndexableTrie();
-            var bitReader = new BitReader(_input);
+            _bitReader = new BitReader(_input);
 
-            _indexableTrie.Add(1);
-            _indexableTrie.Add(2);
-            //_indexableTrie.Add(3);
-            //_indexableTrie.Add(4);
-            //_indexableTrie.Add(5);
+            // Build trie
+            for (int i = 0; i < 256; i++)
+                _indexableTrie.Add(Convert.ToByte(i));
 
-            byte next = Convert.ToByte(_input.ReadByte());
-            byte last = next;
+            int next = ReadToken();
+            int last = next;
 
-            while (DataNotEnded())
+            while (_bitReader.BytesLeft > 1)
             {
-                next = Convert.ToByte(_input.ReadByte());
+                next = ReadToken();
 
                 var lastNode = _indexableTrie[last];
 
-                byte symbolFromTrie = GetSymbol(_indexableTrie[next]);
+                byte symbolFromTrie;
+                if (next > _indexableTrie.Count)
+                    symbolFromTrie = GetSymbol(_indexableTrie[last]);
+                else 
+                    symbolFromTrie = GetSymbol(_indexableTrie[next]);
                 _indexableTrie.Add(lastNode, symbolFromTrie);
 
                 // odczyt od najwyższego poziomu do danego węzła i wypisanie na wyjściu
@@ -114,8 +124,15 @@ namespace CryptZip.Compression
 
             GetBytes(_indexableTrie[next].Parent);
             _output.WriteByte(_indexableTrie[next].Value);
-
+            //_output.WriteByte(_indexableTrie[_indexableTrie.Count].Value); // zamiastego odczytanie wartości ostatniego bajtu
+            _output.WriteByte(BitConverter.ToByte(_bitReader.Read(8)));
             _output.Flush();
+        }
+
+        private int ReadToken()
+        {
+            int value = BitConverter.ToInt(_bitReader.Read(_bitsPerToken));
+            return value;
         }
 
         private void GetBytes(TrieNode node)
@@ -129,7 +146,8 @@ namespace CryptZip.Compression
 
             while (stack.Any())
             {
-                _output.WriteByte(stack.Pop());
+                byte value = stack.Pop();
+                _output.WriteByte(value);
             }
         }
 
