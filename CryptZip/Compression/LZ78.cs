@@ -74,7 +74,7 @@ namespace CryptZip.Compression
 
             while (bitReader.BytesLeft > 1)
             {
-                int bitsPerIndex = BitConverter.ToInt(bitReader.Read(5)) + 1;
+                int bitsPerIndex = BitConverter.ToInt(bitReader.Read(5)) + 1; // ToByte?
                 int index = BitConverter.ToInt(bitReader.Read(bitsPerIndex));
                 byte symbol = BitConverter.ToByte(bitReader.Read(8));
 

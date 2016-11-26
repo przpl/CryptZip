@@ -8,12 +8,11 @@ namespace CryptZip.Compression
     public class LZW : ICompressor
     {
         private BitWriter _bitWriter;
+        private BitReader _bitReader;
         private Trie _trie;
         private IndexableTrie _indexableTrie;
         private Stream _input, _output;
         private byte _next;
-
-        private const int _bitsPerToken = 12;
 
         public void Compress(Stream input, Stream output)
         {
@@ -23,22 +22,20 @@ namespace CryptZip.Compression
             _bitWriter = new BitWriter(_output);
             _trie = new Trie();
 
-            BuildTrie();
+            BuildTrie(_trie);
 
             _next = Convert.ToByte(_input.ReadByte());
 
             while (DataNotEnded())
                 CompressNextString();
 
-            //debugStream.Close();
-
             Finalize();
         }
 
-        private void BuildTrie()
+        private void BuildTrie(Trie trie)
         {
             for (int i = 0; i < 256; i++)
-                _trie.Add(Convert.ToByte(i));
+                trie.Add(Convert.ToByte(i));
         }
 
         private bool DataNotEnded()
@@ -58,35 +55,27 @@ namespace CryptZip.Compression
                 node = _trie.FindChild(node, _next);
             }
 
-            if (lastNode != null && !Trie.IsRoot(lastNode))
-                WriteToken(lastNode, _next);
-            else
-                WriteToken(node, _next);
-
-            // zapis ostatniego znaku
-            if (!DataNotEnded())
-                _bitWriter.Write(BitConverter.ToBits(_next, 8));
+            WriteToken(lastNode, _next);
         }
 
         private void Finalize()
         {
+            WriteLastSymbol();
             _bitWriter.Flush();
             _trie.Dispose();
         }
 
-        //private StreamWriter debugStream = new StreamWriter(@"E:\tokens.txt");
+        private void WriteLastSymbol()
+        {
+            _bitWriter.Write(BitConverter.ToBits(_next, 8));
+        }
 
         private void WriteToken(TrieNode lastNode, byte symbol)
         {
             _trie.Add(lastNode, symbol);
-            // liczba bitów na indeks, indeks (5 oznacza maksymalnie 32-bitowe indeksy)
-            //_bitWriter.Write(BitConverter.ToBits(BitConverter.MinimalNumberOfBits(lastNode.Index), 5));
-            _bitWriter.Write(BitConverter.ToBits(lastNode.Index, _bitsPerToken));
-            //debugStream.WriteLine(lastNode.Index);
+            _bitWriter.Write(BitConverter.ToBits(BitConverter.MinimalNumberOfBits(lastNode.Index) - 1, 5));
+            _bitWriter.Write(BitConverter.ToBits(lastNode.Index));
         }
-
-        private BitReader _bitReader;
-        private byte lastSymbol;
 
         public void Decompress(Stream input, Stream output)
         {
@@ -96,9 +85,7 @@ namespace CryptZip.Compression
             _indexableTrie = new IndexableTrie();
             _bitReader = new BitReader(_input);
 
-            // Build trie
-            for (int i = 0; i < 256; i++)
-                _indexableTrie.Add(Convert.ToByte(i));
+            BuildTrie(_indexableTrie);
 
             int next = ReadToken();
             int last = next;
@@ -116,89 +103,48 @@ namespace CryptZip.Compression
                     symbolFromTrie = GetSymbol(_indexableTrie[next]);
                 _indexableTrie.Add(lastNode, symbolFromTrie);
 
-                // odczyt od najwyższego poziomu do danego węzła i wypisanie na wyjściu
-                GetBytes(_indexableTrie[_indexableTrie.Count].Parent);
+                ReadString(_indexableTrie[_indexableTrie.Count].Parent);
 
                 last = next;
             }
 
-            GetBytes(_indexableTrie[next].Parent);
-            _output.WriteByte(_indexableTrie[next].Value);
-            //_output.WriteByte(_indexableTrie[_indexableTrie.Count].Value); // zamiastego odczytanie wartości ostatniego bajtu
-            _output.WriteByte(BitConverter.ToByte(_bitReader.Read(8)));
+            ReadLastToken(next);
+
             _output.Flush();
+        }
+
+        private void ReadLastToken(int next)
+        {
+            ReadString(_indexableTrie[next].Parent);
+            _output.WriteByte(_indexableTrie[next].Value);
+            _output.WriteByte(BitConverter.ToByte(_bitReader.Read(8)));
         }
 
         private int ReadToken()
         {
-            int value = BitConverter.ToInt(_bitReader.Read(_bitsPerToken));
-            return value;
+            int bitsPerToken = BitConverter.ToInt(_bitReader.Read(5)) + 1;
+            return BitConverter.ToInt(_bitReader.Read(bitsPerToken));
         }
 
-        private void GetBytes(TrieNode node)
+        private void ReadString(TrieNode node)
         {
             var stack = new Stack<byte>();
-            while (node.Index != 0) // funkcja is root
+            while (!Trie.IsRoot(node))
             {
                 stack.Push(node.Value);
                 node = node.Parent;
             }
 
             while (stack.Any())
-            {
-                byte value = stack.Pop();
-                _output.WriteByte(value);
-            }
+                _output.WriteByte(stack.Pop());
         }
 
         private byte GetSymbol(TrieNode node)
         {
-            while (node.Parent.Index != 0) // funkcja is root
+            while (!Trie.IsRoot(node.Parent))
                 node = node.Parent;
 
             return node.Value;
-        }
-
-        //_next = Convert.ToByte(_input.ReadByte());
-        //    _output.WriteByte(_next);
-
-        //    while (DataNotEnded())
-        //    {
-        //        byte last = _next;
-        //_next = Convert.ToByte(_input.ReadByte());
-        //        _output.WriteByte(_next);
-
-        //        var node = _indexableTrie[last];
-        //_indexableTrie.Add(node, _next);
-        //    }
-
-        private bool IsOneCharString(int index)
-        {
-            return index == 0;
-        }
-
-        private void ReadSymbol(byte symbol)
-        {
-            _indexableTrie.Add(symbol);
-            _output.WriteByte(symbol);
-        }
-
-        private void ReadSymbols(int index, byte symbol)
-        {
-            var bytes = new Stack<byte>();
-            bytes.Push(symbol);
-
-            var node = _indexableTrie[index];
-            _indexableTrie.Add(node, symbol);
-
-            while (node.Index > 0)
-            {
-                bytes.Push(node.Value);
-                node = node.Parent;
-            }
-
-            while (bytes.Count > 0)
-                _output.WriteByte(bytes.Pop());
         }
     }
 }
