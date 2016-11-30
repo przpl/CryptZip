@@ -108,6 +108,7 @@ namespace CryptZip.Compression
 
             if (bitsPerToken%8 == 0)
                 return bitsPerToken/8;
+
             return bitsPerToken/8 + 1;
         }
     }

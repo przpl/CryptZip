@@ -6,5 +6,6 @@
 spod tablicy
 - LZ78 oraz LZW dynamiczna liczba bitów potrzebna do zapisu indeksu, w zależności od aktualnego rozmiaru słownika, słownik rośnie 512, 1024, 2048 itp.
 - pomiar przepustowości algorytmów LZ78 oraz LZW w zależności od rozmiaru słownika
+- optymalizacja Convert.ToByte do (byte)? np. w SlidingWindow, sprawdzić co jest szybsze w BenchmarkNET
 
 - LZW: do węzła dodajemy ojca spod indeksu, a do wyjścia wypisujemy po kolei w dół wszystkie węzły zaczynając od indeksu

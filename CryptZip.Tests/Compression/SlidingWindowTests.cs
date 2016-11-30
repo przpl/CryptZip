@@ -1,6 +1,6 @@
-﻿using System.IO;
-using CryptZip.Compression;
+﻿using CryptZip.Compression;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.IO;
 
 namespace CryptZip.Tests.Compression
 {
@@ -21,7 +21,7 @@ namespace CryptZip.Tests.Compression
         {
             MemoryStream stream = new MemoryStream(new byte[] { 0, 1, 2, 3, 4, 5 });
             SlidingWindow window = new SlidingWindow(stream, 4, 3);
-            window.Slide();
+            window.Slide(1);
             byte[] bytes = window.Bytes;
             CollectionAssert.AreEqual(new byte[] { 0, 0, 0, 0, 1, 2, 3 }, bytes);
         }
