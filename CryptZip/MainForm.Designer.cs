@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.chooseFileButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.pathLabel = new System.Windows.Forms.Label();
@@ -41,12 +42,14 @@
             this.encryptCheckBox = new System.Windows.Forms.CheckBox();
             this.compressCheckBox = new System.Windows.Forms.CheckBox();
             this.processingGroupBox = new System.Windows.Forms.GroupBox();
+            this.timeLabel = new System.Windows.Forms.Label();
             this.statusLabel = new System.Windows.Forms.Label();
             this.processButton = new System.Windows.Forms.Button();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.fileGroupBox = new System.Windows.Forms.GroupBox();
             this.modeLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.timeTimer = new System.Windows.Forms.Timer(this.components);
             this.optionsGroupBox.SuspendLayout();
             this.processingGroupBox.SuspendLayout();
             this.fileGroupBox.SuspendLayout();
@@ -177,6 +180,7 @@
             // 
             // processingGroupBox
             // 
+            this.processingGroupBox.Controls.Add(this.timeLabel);
             this.processingGroupBox.Controls.Add(this.statusLabel);
             this.processingGroupBox.Controls.Add(this.processButton);
             this.processingGroupBox.Controls.Add(this.progressBar);
@@ -186,6 +190,18 @@
             this.processingGroupBox.TabIndex = 7;
             this.processingGroupBox.TabStop = false;
             this.processingGroupBox.Text = "Processing";
+            // 
+            // timeLabel
+            // 
+            this.timeLabel.AutoSize = true;
+            this.timeLabel.BackColor = System.Drawing.Color.Transparent;
+            this.timeLabel.Location = new System.Drawing.Point(173, 53);
+            this.timeLabel.Name = "timeLabel";
+            this.timeLabel.Size = new System.Drawing.Size(34, 13);
+            this.timeLabel.TabIndex = 3;
+            this.timeLabel.Text = "00:00";
+            this.timeLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.timeLabel.Visible = false;
             // 
             // statusLabel
             // 
@@ -246,6 +262,11 @@
             this.label3.TabIndex = 6;
             this.label3.Text = "Mode:";
             // 
+            // timeTimer
+            // 
+            this.timeTimer.Interval = 1000;
+            this.timeTimer.Tick += new System.EventHandler(this.timeTimer_Tick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -289,6 +310,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox keyTextBox;
         private System.Windows.Forms.Label statusLabel;
+        private System.Windows.Forms.Label timeLabel;
+        private System.Windows.Forms.Timer timeTimer;
     }
 }
 

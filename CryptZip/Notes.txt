@@ -10,5 +10,4 @@ spod tablicy
 - LZ77 Token, optymalizacja: int zamiast byte, wtedy nie trzeba rzutować?
 - SlidingWindow NextToken: null zamiast Tokena, a bajt odczytywany bezpośrednio w LZ77
 - LZ78 write token, porównanie prędkości z int zamiast całego TrieNode jako parametr
-
-- LZW: do węzła dodajemy ojca spod indeksu, a do wyjścia wypisujemy po kolei w dół wszystkie węzły zaczynając od indeksu
+- możliwość zatrzymania pracy programu

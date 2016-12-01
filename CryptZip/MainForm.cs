@@ -13,6 +13,7 @@ namespace CryptZip
     {
         private string _filePath;
         private readonly IPadding _padding = new PKCS7Padding();
+        private int _secondsElapsed;
 
         public MainForm()
         {
@@ -62,6 +63,10 @@ namespace CryptZip
                 Unpack();
             else 
                 Pack();
+
+            timeLabel.Visible = true;
+            _secondsElapsed = 0;
+            timeTimer.Start();
         }
 
         private void ValidateUserInput()
@@ -122,6 +127,22 @@ namespace CryptZip
         private void OnWorkFinished(object source, EventArgs e)
         {
             SwitchControls(true);
+            timeTimer.Stop();
+            timeLabel.Visible = false;
+            
+            if (_secondsElapsed > 0)
+            {
+                string timeInfo = " in ";
+                int minutes = _secondsElapsed / 60;
+                int seconds = _secondsElapsed % 60;
+                if (minutes > 0)
+                    timeInfo += minutes + " minutes";
+                if (minutes > 0 && seconds > 0)
+                    timeInfo += " and ";
+                if (seconds > 0)
+                    timeInfo += seconds + " seconds";
+                statusLabel.Text += timeInfo;
+            }
         }
 
         private void SwitchControls(bool enabled)
@@ -133,9 +154,7 @@ namespace CryptZip
             encryptCheckBox.Enabled = enabled;
             modesComboBox.Enabled = enabled;
             processButton.Enabled = enabled;
-
-            if (encryptCheckBox.Enabled)
-                keyTextBox.Enabled = true;
+            keyTextBox.Enabled = enabled;
 
             progressBar.Style = enabled ? ProgressBarStyle.Blocks : ProgressBarStyle.Marquee;
         }
@@ -191,6 +210,14 @@ namespace CryptZip
                 default:
                     return null;
             }
+        }
+
+        private void timeTimer_Tick(object sender, EventArgs e)
+        {
+            _secondsElapsed++;
+            int minutes = _secondsElapsed/60;
+            int seconds = _secondsElapsed%60;
+            timeLabel.Text = minutes.ToString("D2") + ":" + seconds.ToString("D2");
         }
     }
 }
