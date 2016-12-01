@@ -1,27 +1,30 @@
-﻿
-namespace CryptZip.Compression
+﻿namespace CryptZip.Compression
 {
     public class SlidingBuffer
     {
-        public byte[] Bytes { get; set; }
-
-        private int _index;
+        private readonly byte[] _bytes;
+        private int _end;
 
         public SlidingBuffer(int size)
         {
-            Bytes = new byte[size];
-            _index = Bytes.Length;
+            _bytes = new byte[size];
         }
 
         public void Add(byte b)
         {
-            if (_index > 0)
-                _index--;
+            _bytes[_end++] = b;
+            _end %= _bytes.Length;
+        }
 
-            for (int i = _index; i < Bytes.Length - 1; i++)
-                Bytes[i] = Bytes[i + 1];
-
-            Bytes[Bytes.Length - 1] = b;
+        public byte this[int offset]
+        {
+            get
+            {
+                int index = _end - offset;
+                if (index < 0)
+                    index += _bytes.Length;
+                return _bytes[index];
+            }
         }
     }
 }

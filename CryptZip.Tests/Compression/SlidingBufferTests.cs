@@ -9,20 +9,24 @@ namespace CryptZip.Tests.Compression
         [TestMethod]
         public void Add_AddsOneByte_Added()
         {
-            SlidingBuffer buffer = new SlidingBuffer(3);
+            var buffer = new SlidingBuffer(3);
+
             buffer.Add(1);
-            CollectionAssert.AreEqual(new byte[] {0,0,1}, buffer.Bytes);
+
+            Assert.AreEqual(1, buffer[1]);
         }
 
         [TestMethod]
         public void Add_AddsFourBytes_Added()
         {
-            SlidingBuffer buffer = new SlidingBuffer(3);
-            buffer.Add(1);
-            buffer.Add(2);
-            buffer.Add(3);
-            buffer.Add(4);
-            CollectionAssert.AreEqual(new byte[] { 2, 3, 4 }, buffer.Bytes);
+            var buffer = new SlidingBuffer(3);
+
+            for (int i = 1; i <= 5; i++)
+                buffer.Add((byte)i);
+
+            Assert.AreEqual(5, buffer[1]);
+            Assert.AreEqual(4, buffer[2]);
+            Assert.AreEqual(3, buffer[3]);
         }
     }
 }

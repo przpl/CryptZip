@@ -56,15 +56,11 @@ namespace CryptZip.Compression
             _bitWriter.Flush();
         }
 
-        //private StreamWriter temp = new StreamWriter(@"D:\tokens.txt");
-
         private void WriteToken(Token token)
         {
             _bitWriter.Write(BitConverter.ToBits(token.Offset, _bitsPerOffset));
             _bitWriter.Write(BitConverter.ToBits(token.Length, _bitsPerLength));
             _bitWriter.Write(BitConverter.ToBits(token.Byte, 8));
-            //temp.WriteLine(String.Format("({0}, {1}, \"{2}\")", token.Offset, token.Length, Convert.ToChar(token.Byte)));
-            //temp.Flush();
         }
 
         public void Decompress(Stream input, Stream output)
@@ -97,7 +93,7 @@ namespace CryptZip.Compression
 
                 for (int i = 0; i < length; i++)
                 {
-                    byte b = buffer.Bytes[buffer.Bytes.Length - offset];
+                    byte b = buffer[offset];
                     buffer.Add(b);
                     _output.WriteByte(b);
                 }
