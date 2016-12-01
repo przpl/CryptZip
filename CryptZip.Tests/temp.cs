@@ -25,8 +25,8 @@ namespace CryptZip.Tests
         //[TestMethod]
         //public void compress()
         //{
-        //    var alg = new LZ77();
-        //    var input = new FileStream(@"D:\test2.txt", FileMode.Open, FileAccess.Read);
+        //    var alg = new LZ77(28, 12);
+        //    var input = new FileStream(@"D:\test.txt", FileMode.Open, FileAccess.Read);
         //    var output = new FileStream(@"D:\cryptzip.txt", FileMode.Create, FileAccess.Write);
         //    alg.Compress(input, output);
         //    input.Close();
@@ -37,6 +37,8 @@ namespace CryptZip.Tests
         //    alg.Decompress(input, output);
         //    input.Close();
         //    output.Close();
+
+        //    CollectionAssert.AreEqual(File.ReadAllBytes(@"D:\test.txt"), File.ReadAllBytes(@"D:\cryptzip - decompressed.txt"));
         //}
     }
 }

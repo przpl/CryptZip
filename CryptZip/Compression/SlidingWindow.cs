@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 
 namespace CryptZip.Compression
 {
-    public class SlidingWindow
+    public class SlidingWindow // test wydajności z Bytes.Length vs jakaś zmienna
     {
         public byte[] Bytes { get; }
 
@@ -86,6 +85,8 @@ namespace CryptZip.Compression
             if (index != -1)
             {
                 lastOffset = _border - index;
+                if (_border < index)
+                    lastOffset += Bytes.Length;
                 lastLength = MatchLength(index);
             }
 
@@ -104,6 +105,8 @@ namespace CryptZip.Compression
                     continue;
 
                 lastOffset = _border - index;
+                if (_border < index)
+                    lastOffset += Bytes.Length;
                 lastLength = currentMatchLength;
                 lastIndex = index;
             }
@@ -115,11 +118,8 @@ namespace CryptZip.Compression
             if (border == 0)
                 border = Bytes.Length;
 
-            if (lastOffset == 0 && lastLength == 1)
-                Debug.WriteLine("");
-
-            return lastIndex == -1 ? new Token { Empty = true, Byte = Bytes[border - 1]}
-                                   : new Token { Offset = lastOffset, Length = lastLength, Byte = Bytes[border - 1]};
+            return lastIndex == -1 ? new Token { Empty = true, Byte = Bytes[border - 1] }
+                                   : new Token { Offset = lastOffset, Length = lastLength, Byte = Bytes[border - 1] };
         }
 
         private bool IsLastByte()

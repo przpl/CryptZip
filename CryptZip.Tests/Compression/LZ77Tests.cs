@@ -31,17 +31,17 @@ namespace CryptZip.Tests
             CollectionAssert.AreEqual(excpected, result);
         }
 
-        //[TestMethod]
-        //public void Compress3_Compresses_Compressed()
-        //{
-        //    var lz77 = new LZ77();
-        //    var input = new MemoryStream(new byte[] { 1, 2, 3 });
-        //    var output = new MemoryStream();
-        //    byte[] excpected = { 16, 9, 0, 0, 0, 0, 128, 0, 0, 0, 128, 0, 0, 0, 96 };
-        //    lz77.Compress(input, output);
-        //    byte[] result = output.ToArray();
-        //    CollectionAssert.AreEqual(excpected, result);
-        //}
+        [TestMethod]
+        public void Compress3_Compresses_Compressed()
+        {
+            var lz77 = new LZ77();
+            var input = new MemoryStream(new byte[] { 1, 2, 3 });
+            var output = new MemoryStream();
+            byte[] excpected = { 16, 9, 0, 0, 0, 0, 128, 0, 0, 0, 128, 0, 0, 0, 96 };
+            lz77.Compress(input, output);
+            byte[] result = output.ToArray();
+            CollectionAssert.AreEqual(excpected, result);
+        }
 
         [TestMethod]
         public void Decompress_Decompresses_Decompressed()
@@ -67,16 +67,16 @@ namespace CryptZip.Tests
             CollectionAssert.AreEqual(excpected, result);
         }
 
-        //[TestMethod]
-        //public void Decompress3_Decompresses_Decompressed()
-        //{
-        //    var lz77 = new LZ77();
-        //    var input = new MemoryStream(new byte[] { 16, 9, 0, 0, 0, 0, 128, 0, 0, 0, 128, 0, 0, 0, 96 });
-        //    var output = new MemoryStream();
-        //    byte[] excpected = { 1, 2, 3 };
-        //    lz77.Decompress(input, output);
-        //    byte[] result = output.ToArray();
-        //    CollectionAssert.AreEqual(excpected, result);
-        //}
+        [TestMethod]
+        public void Decompress3_Decompresses_Decompressed()
+        {
+            var lz77 = new LZ77();
+            var input = new MemoryStream(new byte[] { 16, 9, 0, 0, 0, 0, 128, 0, 0, 0, 128, 0, 0, 0, 96 });
+            var output = new MemoryStream();
+            byte[] excpected = { 1, 2, 3 };
+            lz77.Decompress(input, output);
+            byte[] result = output.ToArray();
+            CollectionAssert.AreEqual(excpected, result);
+        }
     }
 }

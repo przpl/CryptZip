@@ -123,6 +123,40 @@ namespace CryptZip.Tests.Compression
         }
 
         [TestMethod]
+        public void NextToken_ReadsAllTokens_Correct()
+        {
+            var stream = new MemoryStream(new byte[] { 1, 2, 3, 12, 4, 5, 6, 12, 7, 4, 8, 9, 10, 4, 11, 12, 7, 4, 8, 16, 5, 19, 12, 13, 2, 14, 15, 8, 12, 4, 5, 6, 4, 5, 6, 4, 12, 16, 11, 12, 17, 16, 8, 12, 13, 4, 2, 18, 7, 11, 3 });
+            var window = new SlidingWindow(stream, 28, 12);
+            for (int i = 0; i < 22; i++)
+                window.NextToken();
+
+            var token = window.NextToken();
+            Assert.AreEqual(22, token.Offset);
+            Assert.AreEqual(1, token.Length);
+            Assert.AreEqual(8, token.Byte);
+
+            token = window.NextToken();
+            Assert.AreEqual(21, token.Offset);
+            Assert.AreEqual(2, token.Length);
+            Assert.AreEqual(4, token.Byte);
+
+            token = window.NextToken();
+            Assert.AreEqual(22, token.Offset);
+            Assert.AreEqual(1, token.Length);
+            Assert.AreEqual(18, token.Byte);
+
+            token = window.NextToken();
+            Assert.AreEqual(0, token.Offset);
+            Assert.AreEqual(0, token.Length);
+            Assert.AreEqual(7, token.Byte);
+
+            token = window.NextToken();
+            Assert.AreEqual(11, token.Offset);
+            Assert.AreEqual(1, token.Length);
+            Assert.AreEqual(3, token.Byte);
+        }
+
+        [TestMethod]
         public void LookAheadEmpty_Nothing_NotEmpty()
         {
             MemoryStream stream = new MemoryStream(new byte[] { 1, 2, 3, 4, 5 });
