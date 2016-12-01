@@ -25,12 +25,18 @@ namespace CryptZip.Tests
         //[TestMethod]
         //public void compress()
         //{
-        //    var alg = new LZ77(26, 10);
-        //    string text = "alf_eastman_easily_yells_AAAAAAAAAAAAAAAAH"; // 26, 10
-        //    var input = new MemoryStream(Encoding.ASCII.GetBytes(text));
-        //    //var output = new FileStream(@"D:\cryptzip.txt", FileMode.Create, FileAccess.Write);
-        //    alg.Compress(input, new MemoryStream());
+        //    var alg = new LZ77();
+        //    var input = new FileStream(@"D:\test2.txt", FileMode.Open, FileAccess.Read);
+        //    var output = new FileStream(@"D:\cryptzip.txt", FileMode.Create, FileAccess.Write);
+        //    alg.Compress(input, output);
         //    input.Close();
+        //    output.Close();
+
+        //    input = new FileStream(@"D:\cryptzip.txt", FileMode.Open, FileAccess.Read);
+        //    output = new FileStream(@"D:\cryptzip - decompressed.txt", FileMode.Create, FileAccess.Write);
+        //    alg.Decompress(input, output);
+        //    input.Close();
+        //    output.Close();
         //}
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 
 namespace CryptZip.Compression
@@ -7,54 +8,75 @@ namespace CryptZip.Compression
     {
         public byte[] Bytes { get; }
 
-        public bool LookAheadEmpty => _end <= _border;
+        public bool LookAheadEmpty => _border == _end;
 
         private int _start, _border, _end; // example: length of Search = 3 and Look = 4, then _start = 0, _border = 3, _end = 7 (_end is out of range)
+        private int _searchBufferLength;
         private readonly Stream _stream;
 
         public SlidingWindow(Stream stream, int searchBufferLength, int lookAheadLength)
         {
             _stream = stream;
             Bytes = new byte[searchBufferLength + lookAheadLength];
-            _border = searchBufferLength;
-            _end = _border;
-            _start = searchBufferLength;
-            FillLookAheadBuffer();
+            FillLookAheadBuffer(lookAheadLength);
+            _searchBufferLength = searchBufferLength;
         }
 
-        private void FillLookAheadBuffer()
+        private void FillLookAheadBuffer(int lookAheadLength)
         {
-            for (int i = _border; i < Bytes.Length && _stream.Position < _stream.Length; i++)
+            for (int i = 0; i < lookAheadLength && _stream.Position < _stream.Length; i++)
             {
                 Bytes[i] = Convert.ToByte(_stream.ReadByte());
                 _end++;
             }
         }
 
-        public void Slide(int count)
+        public void Slide(int count) // usunąć
         {
             for (int i = 0; i < count; i++)
+                Slide();
+        }
+
+        private void Slide()
+        {
+            SlideStart();
+            SlideBorder();
+            if (_stream.Position < _stream.Length)
+                SlideEnd();
+        }
+
+        private void SlideStart()
+        {
+            if (_searchBufferLength != -1)
+                _searchBufferLength--;
+
+            if (_searchBufferLength == -1)
             {
-                if (_start > 0)
-                    _start--;
-
-                if (_stream.Position > _stream.Length || _end == _border)
-                    return;
-
-                for (int j = _start; j < _end - 1; j++)
-                    Bytes[j] = Bytes[j + 1];
-
-                if (_stream.Position < _stream.Length)
-                    Bytes[_end - 1] = Convert.ToByte(_stream.ReadByte());
-                else
-                    _end--;
+                _start++;
+                _start %= Bytes.Length;
             }
+        }
+
+        private void SlideBorder()
+        {
+            _border++;
+            _border %= Bytes.Length;
+        }
+
+        private void SlideEnd()
+        {
+            Bytes[_end++] = Convert.ToByte(_stream.ReadByte()); // test prędkości rzutowania
+            _end %= Bytes.Length;
         }
 
         public Token NextToken()
         {
             if (IsLastByte())
-                return new Token {Byte = Bytes[_border]};
+            {
+                Token token = new Token { Byte = Bytes[_border] };
+                SlideBorder();
+                return token;
+            }
 
             byte currentByte = Bytes[_border];
 
@@ -88,19 +110,35 @@ namespace CryptZip.Compression
 
             Slide(lastLength + 1);
 
-            return lastIndex == -1 ? new Token { Empty = true, Byte = Bytes[_border - 1]}
-                                   : new Token { Offset = lastOffset, Length = lastLength, Byte = Bytes[_border - 1]};
+            int border = _border;
+
+            if (border == 0)
+                border = Bytes.Length;
+
+            if (lastOffset == 0 && lastLength == 1)
+                Debug.WriteLine("");
+
+            return lastIndex == -1 ? new Token { Empty = true, Byte = Bytes[border - 1]}
+                                   : new Token { Offset = lastOffset, Length = lastLength, Byte = Bytes[border - 1]};
         }
 
         private bool IsLastByte()
         {
-            return _border == _stream.Length - 1;
+            if (_border == _end - 1)
+                return true;
+            if (_border < _end)
+                return false;
+
+            return _border == _end + Bytes.Length - 1;
         }
 
         private int LastIndex(byte searchItem, int limitExclusive)
         {
+            if (limitExclusive < _start)
+                limitExclusive += Bytes.Length;
+
             for (int i = limitExclusive - 1; i >= _start; i--)
-                if (Bytes[i] == searchItem)
+                if (Bytes[i % Bytes.Length] == searchItem)
                     return i;
 
             return -1;
@@ -110,7 +148,7 @@ namespace CryptZip.Compression
         {
             int offset = 1;
 
-            while (IsPtrInsideLookAhead(offset) && Bytes[startIndex + offset] == Bytes[_border + offset])
+            while (IsPtrInsideLookAhead(offset) && Bytes[(startIndex + offset) % Bytes.Length] == Bytes[(_border + offset) % Bytes.Length])
                 offset++;
 
             return offset;
@@ -118,7 +156,14 @@ namespace CryptZip.Compression
 
         private bool IsPtrInsideLookAhead(int offset)
         {
-            return _border + offset < _end - 1; // _end - 1 because we can't match last element of look-ahead buffer, it is needed for token
+            int end = _end;
+
+            if (_border > _end)
+                end += Bytes.Length;
+
+            // przełącznik ? :
+
+            return _border + offset < end - 1; // end - 1 because we can't match last element of look-ahead buffer, it is needed for token
         }
     }
 }
