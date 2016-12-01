@@ -27,6 +27,22 @@ namespace CryptZip
             return path.EndsWith(FILE_EXTENSTION);
         }
 
+        public static bool IsEncrypted(string path) // testy
+        {
+            using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+            {
+                if (stream.Length == 0)
+                    return false;
+
+                int modeId = stream.ReadByte();
+
+                if (modeId == Mode.Full || modeId == Mode.Encrypt)
+                    return true;
+
+                return false;
+            }
+        }
+
         public virtual async Task PackAsync(string path)
         {
             Input = new FileStream(path, FileMode.Open, FileAccess.Read);

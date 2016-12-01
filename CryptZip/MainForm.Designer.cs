@@ -114,7 +114,6 @@
             this.keyTextBox.PasswordChar = '*';
             this.keyTextBox.Size = new System.Drawing.Size(366, 20);
             this.keyTextBox.TabIndex = 9;
-            this.keyTextBox.TextChanged += new System.EventHandler(this.keyTextBox_TextChanged);
             // 
             // label1
             // 
@@ -163,7 +162,6 @@
             this.encryptCheckBox.TabIndex = 1;
             this.encryptCheckBox.Text = "Encrypt";
             this.encryptCheckBox.UseVisualStyleBackColor = true;
-            this.encryptCheckBox.CheckedChanged += new System.EventHandler(this.encryptCheckBox_CheckedChanged);
             // 
             // compressCheckBox
             // 
@@ -176,7 +174,6 @@
             this.compressCheckBox.TabIndex = 0;
             this.compressCheckBox.Text = "Compress";
             this.compressCheckBox.UseVisualStyleBackColor = true;
-            this.compressCheckBox.CheckedChanged += new System.EventHandler(this.compressCheckBox_CheckedChanged);
             // 
             // processingGroupBox
             // 
@@ -201,7 +198,6 @@
             // 
             // processButton
             // 
-            this.processButton.Enabled = false;
             this.processButton.Location = new System.Drawing.Point(301, 48);
             this.processButton.Name = "processButton";
             this.processButton.Size = new System.Drawing.Size(75, 23);

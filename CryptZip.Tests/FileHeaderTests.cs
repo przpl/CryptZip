@@ -1,68 +1,80 @@
-﻿using System;
-using System.IO;
+﻿using CryptZip.Compression;
+using CryptZip.Encryption;
+using CryptZip.Encryption.Padding;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.IO;
 
 namespace CryptZip.Tests
 {
     [TestClass]
     public class FileHeaderTests
     {
-        //[TestMethod]
-        //[ExpectedException(typeof(ArgumentException))]
-        //public void GetBytes_NoEncryptionMode_Returned()
-        //{
-        //    new FileHeader().GetBytes(CompressionAlg.LZ77, EncryptionAlg.AES);
-        //}
+        [TestMethod]
+        public void GetPacker_FullMode_Detected()
+        {
+            var header = new FileHeader();
+            File.WriteAllBytes(@"debug.txt", new[] { Mode.Full, CompressorId.LZ77, CipherId.AES, EncryptorId.ECB });
+            Packer packer = header.GetPacker(@"debug.txt", new byte[] { 1, 2, 3, 4, 5, 6 });
 
-        //[TestMethod]
-        //public void GetBytes_FullMode_Returned()
-        //{
-        //    CollectionAssert.AreEqual(new byte[] {0, (byte)CompressionAlg.LZ77, (byte)EncryptionAlg.AES, (byte)EncrypctionMode.ECB}, 
-        //        new FileHeader().GetBytes(CompressionAlg.LZ77, EncryptionAlg.AES, EncrypctionMode.ECB));
-        //}
+            Assert.IsInstanceOfType(packer, typeof(FullPacker));
 
-        //[TestMethod]
-        //public void GetBytes_CompressionOnly_Returned()
-        //{
-        //    CollectionAssert.AreEqual(new byte[] { 1, (byte)CompressionAlg.LZ77 },
-        //        new FileHeader().GetBytes(CompressionAlg.LZ77, EncryptionAlg.None));
-        //}
+            File.Delete(@"debug.txt");
+        }
 
-        //[TestMethod]
-        //public void GetBytes_EncryptionOnly_Returned()
-        //{
-        //    CollectionAssert.AreEqual(new byte[] { 2, (byte)EncryptionAlg.AES, (byte)EncrypctionMode.ECB },
-        //        new FileHeader().GetBytes(CompressionAlg.None, EncryptionAlg.AES, EncrypctionMode.ECB));
-        //}
+        [TestMethod]
+        public void GetPacker_CompressionMode_Detected()
+        {
+            var header = new FileHeader();
+            File.WriteAllBytes(@"debug.txt", new[] { Mode.Compress, CompressorId.LZ77 });
+            Packer packer = header.GetPacker(@"debug.txt");
 
-        //[TestMethod]
-        //public void Constructor_FullMode_Returned()
-        //{
-        //    MemoryStream stream = new MemoryStream(new byte[] {0, 0, 0, 0});
-        //    FileHeader header = new FileHeader(stream);
-        //    Assert.AreEqual(CompressionAlg.LZ77, header.CompressionAlg);
-        //    Assert.AreEqual(EncryptionAlg.AES, header.EncryptionAlg);
-        //    Assert.AreEqual(EncrypctionMode.ECB, header.EncrypctionMode);
-        //}
+            Assert.IsInstanceOfType(packer, typeof(CompressionPacker));
 
-        //[TestMethod]
-        //public void Constructor_CompressionOnly_Returned()
-        //{
-        //    MemoryStream stream = new MemoryStream(new byte[] { 1, 0 });
-        //    FileHeader header = new FileHeader(stream);
-        //    Assert.AreEqual(CompressionAlg.LZ77, header.CompressionAlg);
-        //    Assert.AreEqual(EncryptionAlg.None, header.EncryptionAlg);
-        //    Assert.AreEqual(EncrypctionMode.None, header.EncrypctionMode);
-        //}
+            File.Delete(@"debug.txt");
+        }
 
-        //[TestMethod]
-        //public void Constructor_EncryptionOnly_Returned()
-        //{
-        //    MemoryStream stream = new MemoryStream(new byte[] { 2, 0, 0 });
-        //    FileHeader header = new FileHeader(stream);
-        //    Assert.AreEqual(CompressionAlg.None, header.CompressionAlg);
-        //    Assert.AreEqual(EncryptionAlg.AES, header.EncryptionAlg);
-        //    Assert.AreEqual(EncrypctionMode.ECB, header.EncrypctionMode);
-        //}
+        [TestMethod]
+        public void GetPacker_EncryptionMode_Detected()
+        {
+            var header = new FileHeader();
+            File.WriteAllBytes(@"debug.txt", new[] { Mode.Encrypt, CipherId.AES, EncryptorId.ECB });
+            Packer packer = header.GetPacker(@"debug.txt", new byte[] { 1, 2, 3, 4, 5, 6 });
+
+            Assert.IsInstanceOfType(packer, typeof(EncryptionPacker));
+
+            File.Delete(@"debug.txt");
+        }
+
+        [TestMethod]
+        public void GetBytes_FullMode_Returned()
+        {
+            var header = new FileHeader();
+
+            byte[] headerBytes = header.GetBytes(new LZ77(), new ECB(new AES(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 }), 
+                new PKCS7Padding()));
+
+            CollectionAssert.AreEqual(new [] { Mode.Full, CompressorId.LZ77, CipherId.AES, EncryptorId.ECB }, headerBytes);
+        }
+
+        [TestMethod]
+        public void GetBytes_CompressionMode_Returned()
+        {
+            var header = new FileHeader();
+
+            byte[] headerBytes = header.GetBytes(new LZ77(), null);
+
+            CollectionAssert.AreEqual(new[] { Mode.Compress, CompressorId.LZ77 }, headerBytes);
+        }
+
+        [TestMethod]
+        public void GetBytes_EncryptionMode_Returned()
+        {
+            var header = new FileHeader();
+
+            byte[] headerBytes = header.GetBytes(null, new ECB(new AES(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 }),
+                new PKCS7Padding()));
+
+            CollectionAssert.AreEqual(new[] { Mode.Encrypt, CipherId.AES, EncryptorId.ECB }, headerBytes);
+        }
     }
 }

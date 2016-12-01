@@ -98,6 +98,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Matrix.cs" />
+    <Compile Include="Mode.cs" />
     <Compile Include="Packer.cs" />
     <Compile Include="PowerCalculator.cs" />
     <Compile Include="Program.cs" />

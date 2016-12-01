@@ -17,9 +17,9 @@ namespace CryptZip
         public MainForm()
         {
             InitializeComponent();
-            AddAlgorithms(compressComboBox, new [] { nameof(LZ77), nameof(LZ78), nameof(LZW) });
-            AddAlgorithms(encryptComboBox, new [] { nameof(AES), nameof(Serpent), nameof(Twofish) });
-            AddAlgorithms(modesComboBox, new [] { nameof(ECB), nameof(CBC) });
+            AddAlgorithms(compressComboBox, new[] {nameof(LZ77), nameof(LZ78), nameof(LZW)});
+            AddAlgorithms(encryptComboBox, new[] {nameof(AES), nameof(Serpent), nameof(Twofish)});
+            AddAlgorithms(modesComboBox, new[] {nameof(ECB), nameof(CBC)});
         }
 
         private void AddAlgorithms(ComboBox comboBox, IEnumerable<string> algorithmNames)
@@ -28,20 +28,6 @@ namespace CryptZip
                 comboBox.Items.Add(algorithmName);
 
             comboBox.Text = algorithmNames.First();
-        }
-
-        private void compressCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            compressComboBox.Enabled = compressCheckBox.Checked;
-            SwitchProcessButton();
-        }
-
-        private void encryptCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            encryptComboBox.Enabled = encryptCheckBox.Checked;
-            modesComboBox.Enabled = encryptCheckBox.Checked;
-            keyTextBox.Enabled = encryptCheckBox.Checked;
-            SwitchProcessButton();
         }
 
         private void chooseFileButton_Click(object sender, EventArgs e)
@@ -58,31 +44,17 @@ namespace CryptZip
 
                 pathLabel.Text = _filePath ?? "None";
             }
-            SwitchProcessButton();
-        }
-
-        private void SwitchProcessButton()
-        {
-            if (_filePath == null ||
-                (!compressCheckBox.Checked && !encryptCheckBox.Checked) ||
-                (encryptCheckBox.Checked && String.IsNullOrEmpty(keyTextBox.Text)))
-            {
-                processButton.Enabled = false;
-            }
-            else
-                processButton.Enabled = true;
-        }
-
-        private void keyTextBox_TextChanged(object sender, EventArgs e)
-        {
-            SwitchProcessButton();
         }
 
         private void processButton_Click(object sender, EventArgs e)
         {
-            if (!File.Exists(_filePath))
+            try
             {
-                MessageBox.Show("Cannot find file", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ValidateUserInput();
+            }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -90,6 +62,24 @@ namespace CryptZip
                 Unpack();
             else 
                 Pack();
+        }
+
+        private void ValidateUserInput()
+        {
+            if (String.IsNullOrWhiteSpace(_filePath))
+                throw new InvalidOperationException("Please choose a file.");
+
+            if (!File.Exists(_filePath))
+                throw new InvalidOperationException("File does not exist or has been removed.");
+
+            if (!compressCheckBox.Checked && !encryptCheckBox.Checked && !Packer.IsPackedFile(_filePath))
+                throw new InvalidOperationException("Please select at least one action.");
+
+            if ((encryptCheckBox.Checked && !Packer.IsPackedFile(_filePath)) || Packer.IsEncrypted(_filePath))
+            {
+                if (keyTextBox.Text.Length < 6)
+                    throw new InvalidOperationException("Minimum password length is six characters.");
+            }
         }
 
         private void Unpack()
@@ -142,8 +132,10 @@ namespace CryptZip
             encryptComboBox.Enabled = enabled;
             encryptCheckBox.Enabled = enabled;
             modesComboBox.Enabled = enabled;
-            keyTextBox.Enabled = enabled;
             processButton.Enabled = enabled;
+
+            if (encryptCheckBox.Enabled)
+                keyTextBox.Enabled = true;
 
             progressBar.Style = enabled ? ProgressBarStyle.Blocks : ProgressBarStyle.Marquee;
         }

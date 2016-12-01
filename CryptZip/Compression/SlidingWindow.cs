@@ -118,7 +118,7 @@ namespace CryptZip.Compression
             if (border == 0)
                 border = Bytes.Length;
 
-            return lastIndex == -1 ? new Token { Empty = true, Byte = Bytes[border - 1] }
+            return lastIndex == -1 ? new Token { Empty = true, Byte = Bytes[border - 1] } // null zamiast Tokena, a bajt odczytywany bezpośrednio w LZ77
                                    : new Token { Offset = lastOffset, Length = lastLength, Byte = Bytes[border - 1] };
         }
 
