@@ -218,7 +218,7 @@
             this.processButton.Name = "processButton";
             this.processButton.Size = new System.Drawing.Size(75, 23);
             this.processButton.TabIndex = 1;
-            this.processButton.Text = "Process";
+            this.processButton.Text = "Start";
             this.processButton.UseVisualStyleBackColor = true;
             this.processButton.Click += new System.EventHandler(this.processButton_Click);
             // 

@@ -64,7 +64,6 @@ namespace CryptZip
             else 
                 Pack();
 
-            timeLabel.Visible = true;
             _secondsElapsed = 0;
             timeTimer.Start();
         }
@@ -90,7 +89,7 @@ namespace CryptZip
         private void Unpack()
         {
             var header = new FileHeader();
-            var packer = header.GetPacker(_filePath, keyTextBox.Text.ToBytes());
+            Packer packer = header.GetPacker(_filePath, keyTextBox.Text.ToBytes());
             packer.StatusChanged += OnStatusChanged;
             packer.WorkFinished += OnWorkFinished;
 
@@ -128,7 +127,6 @@ namespace CryptZip
         {
             SwitchControls(true);
             timeTimer.Stop();
-            timeLabel.Visible = false;
             
             if (_secondsElapsed > 0)
             {
@@ -153,8 +151,9 @@ namespace CryptZip
             encryptComboBox.Enabled = enabled;
             encryptCheckBox.Enabled = enabled;
             modesComboBox.Enabled = enabled;
-            processButton.Enabled = enabled;
             keyTextBox.Enabled = enabled;
+            processButton.Enabled = enabled;
+            timeLabel.Visible = !enabled;
 
             progressBar.Style = enabled ? ProgressBarStyle.Blocks : ProgressBarStyle.Marquee;
         }
