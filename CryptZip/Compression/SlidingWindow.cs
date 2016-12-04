@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace CryptZip.Compression
 {
-    public class SlidingWindow // test wydajności z Bytes.Length vs jakaś zmienna
+    public class SlidingWindow
     {
         public byte[] Bytes { get; }
 
@@ -13,10 +13,9 @@ namespace CryptZip.Compression
         private int _start, _border, _end; // example: length of Search = 3 and Look = 4, then _start = 0, _border = 3, _end = 7 (_end is out of range)
         private int _searchBufferLength;
         private readonly Stream _stream;
-        private Token[] tokens;
-        private int _threadsCount;
-        private Task[] tasks;
-
+        private readonly Token[] tokens;
+        private readonly int _threadsCount;
+        
         public SlidingWindow(Stream stream, int searchBufferLength, int lookAheadLength, int threadsCount = 8)
         {
             _stream = stream;
@@ -24,7 +23,6 @@ namespace CryptZip.Compression
             FillLookAheadBuffer(lookAheadLength);
             _searchBufferLength = searchBufferLength;
             tokens = new Token[threadsCount];
-            tasks = new Task[threadsCount];
             _threadsCount = threadsCount;
         }
 
@@ -79,70 +77,75 @@ namespace CryptZip.Compression
         {
             if (IsLastByte())
             {
-                var token = new Token { Byte = Bytes[_border] };
+                var token = Token.Empty(Bytes[_border]);
                 SlideBorder();
                 return token;
             }
 
+            ExecuteThreads();
+            Token max = FindLargest();
+            Slide(max.Length + 1);
+
+            return max;
+        }
+
+        private int[] GetSliceIndexes()
+        {
             int searchBufferLength = GetSearchBufferLength();
 
-            if (searchBufferLength < _threadsCount) // only one thread, not needed ???
-            {
-                var task = FindToken(0, _start, _border); // przeładowana wersja?
-                task.Wait();
-                Slide(tokens[0].Length + 1);
-                return tokens[0];
-            }
+            int sliceSize = (int)Math.Ceiling(searchBufferLength / (float)_threadsCount);
 
-            float temp = searchBufferLength/(float)_threadsCount;
+            int[] sliceSizes = new int[_threadsCount];
 
-            int bytesPerThread = (int)Math.Ceiling(temp);
+            for (int i = 0; i < sliceSizes.Length; i++)
+                sliceSizes[i] = sliceSize;
 
-            int[] bytes = new int[_threadsCount]; // liczba bajtów na wątek do przetworzenia
-
-            for (int i = 0; i < bytes.Length; i++)
-                bytes[i] = bytesPerThread;
-
-            int actualValue = bytesPerThread* _threadsCount;
-            int over = actualValue - searchBufferLength;
+            int totalLength = sliceSize * _threadsCount;
+            int excess = totalLength - searchBufferLength;
 
             int j = 0;
-            while (over > 0)
+            while (excess > 0)
             {
-                bytes[j++]--;
-                j %= bytes.Length;
-                over--;
+                sliceSizes[j++]--;
+                j %= sliceSizes.Length;
+                excess--;
             }
-            
-            int[] starts = new int[_threadsCount];
+
+            int[] sliceIndexes = new int[_threadsCount];
             int index = 0;
 
-            for (int i = 0; i < bytes.Length; i++)
+            for (int i = 0; i < sliceSizes.Length; i++)
             {
-                starts[i] = _start + index;
-                index += bytes[i];
+                sliceIndexes[i] = _start + index;
+                index += sliceSizes[i];
             }
+
+            return sliceIndexes;
+        }
+
+        private void ExecuteThreads()
+        {
+            int[] sliceIndexes = GetSliceIndexes();
+
+            var tasks = new Task[_threadsCount];
 
             for (int i = 0; i < _threadsCount; i++)
             {
-                int border = i != starts.Length - 1 ? starts[i + 1] : _border;
-                tasks[i] = FindToken(i, starts[i], border);
+                int border = i != sliceIndexes.Length - 1 ? sliceIndexes[i + 1] : _border;
+                tasks[i] = FindToken(i, sliceIndexes[i], border);
             }
 
-            for (int i = 0; i < tasks.Length; i++)
-                tasks[i].Wait();
+            foreach (var t in tasks)
+                t.Wait();
+        }
 
+        private Token FindLargest()
+        {
             Token max = tokens[0];
 
             for (int i = 1; i < tokens.Length; i++)
-            {
                 if (tokens[i].Length > max.Length)
                     max = tokens[i];
-                else if (tokens[i].Length == max.Length && tokens[i].Offset > max.Offset) // wątek pierwszy powinien mieć najbardziej odległy
-                    max = tokens[i];
-            }
-
-            Slide(max.Length + 1);
 
             return max;
         }
@@ -155,21 +158,24 @@ namespace CryptZip.Compression
             return border - _start;
         }
 
-        public Task FindToken(int threadIndex, int start, int border) // działa ok z jednym wątkiem
+        public Task FindToken(int threadIndex, int start, int border)
         {
-            byte firstInLookAhead = Bytes[_border]; // do zmiennej?
+            byte firstInLookAhead = Bytes[_border];
 
             return Task.Run(() =>
             {
                 int index = FindLast(firstInLookAhead, start, border);
-                int lastLength = 0;
 
-                if (index != -1)
-                    lastLength = MatchLength(index);
-
+                if (index == -1)
+                {
+                    tokens[threadIndex] = Token.Empty(Bytes[_border % Bytes.Length]);
+                    return;
+                }
+                
+                int lastLength = MatchLength(index);
                 int lastIndex = index;
 
-                while (index != -1) // do while
+                do
                 {
                     index = FindLast(firstInLookAhead, start, index);
 
@@ -183,16 +189,15 @@ namespace CryptZip.Compression
 
                     lastLength = currentMatchLength;
                     lastIndex = index;
-                }
+                } while (index != -1);
 
                 int lastOffset = _border - lastIndex;
                 if (_border < lastIndex)
                     lastOffset += Bytes.Length;
 
-                var token = lastIndex == -1 ? new Token { Empty = true, Byte = Bytes[(_border + lastLength) % Bytes.Length] } // Token.Empty - null object pattern, zamiast empty można offset 0 użyć?
-                                       : new Token { Offset = lastOffset, Length = lastLength, Byte = Bytes[(_border + lastLength) % Bytes.Length] };
+                byte tokenByte = Bytes[(_border + lastLength) % Bytes.Length];
 
-                tokens[threadIndex] = token;
+                tokens[threadIndex] = new Token { Offset = lastOffset, Length = lastLength, Byte = tokenByte };
             });
         }
 
@@ -234,8 +239,6 @@ namespace CryptZip.Compression
 
             if (_border > _end)
                 end += Bytes.Length;
-
-            // przełącznik ? :
 
             return _border + offset < end - 1; // end - 1 because we can't match last element of look-ahead buffer, it is needed for token
         }
