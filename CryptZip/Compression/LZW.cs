@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -24,7 +23,7 @@ namespace CryptZip.Compression
 
             BuildTrie(_trie);
 
-            _next = Convert.ToByte(_input.ReadByte());
+            _next = (byte)_input.ReadByte();
 
             while (DataNotEnded())
                 CompressNextString();
@@ -35,7 +34,7 @@ namespace CryptZip.Compression
         private void BuildTrie(Trie trie)
         {
             for (int i = 0; i < 256; i++)
-                trie.Add(Convert.ToByte(i));
+                trie.Add((byte)i);
         }
 
         private bool DataNotEnded()
@@ -45,12 +44,12 @@ namespace CryptZip.Compression
 
         private void CompressNextString()
         {
-            TrieNode node = _trie.FindRootChild(_next);
+            TrieNode node = _trie.GetRootChild(_next);
             TrieNode lastNode = null;
 
             while (!Trie.IsRoot(node) && DataNotEnded())
             {
-                _next = Convert.ToByte(_input.ReadByte());
+                _next = (byte)_input.ReadByte();
                 lastNode = node;
                 node = _trie.FindChild(node, _next);
             }

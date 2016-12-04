@@ -12,7 +12,7 @@ namespace CryptZip.Encryption
         {
             base.Encrypt(input, output);
 
-            while (Index < input.Length)
+            while (DataNotEnded())
             {
                 ReadBlock();
                 Block = Cipher.Encrypt(Block);
@@ -36,7 +36,7 @@ namespace CryptZip.Encryption
         {
             base.Decrypt(input, output);
 
-            while (Index < input.Length)
+            while (DataNotEnded())
             {
                 ReadBlock();
                 Block = Cipher.Decrypt(Block);

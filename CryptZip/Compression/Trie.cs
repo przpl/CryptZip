@@ -48,6 +48,11 @@ namespace CryptZip.Compression
             return FindChild(_root, b);
         }
 
+        public TrieNode GetRootChild(int index)
+        {
+            return _root.Children[index];
+        }
+
         public TrieNode FindChild(TrieNode parent, byte value)
         {
             int index = parent.Children.FindIndex(n => n.Value == value);

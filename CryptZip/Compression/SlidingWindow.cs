@@ -6,7 +6,7 @@ namespace CryptZip.Compression
 {
     public class SlidingWindow
     {
-        public byte[] Bytes { get; }
+        public int[] Bytes { get; }
 
         public bool LookAheadEmpty => _border == _end;
 
@@ -19,7 +19,7 @@ namespace CryptZip.Compression
         public SlidingWindow(Stream stream, int searchBufferLength, int lookAheadLength, int threadsCount = 8)
         {
             _stream = stream;
-            Bytes = new byte[searchBufferLength + lookAheadLength];
+            Bytes = new int[searchBufferLength + lookAheadLength];
             FillLookAheadBuffer(lookAheadLength);
             _searchBufferLength = searchBufferLength;
             tokens = new Token[threadsCount];
@@ -30,7 +30,7 @@ namespace CryptZip.Compression
         {
             for (int i = 0; i < lookAheadLength && _stream.Position < _stream.Length; i++)
             {
-                Bytes[i] = Convert.ToByte(_stream.ReadByte());
+                Bytes[i] = _stream.ReadByte(); //Convert.ToByte(_stream.ReadByte());
                 _end++;
             }
         }
@@ -69,7 +69,7 @@ namespace CryptZip.Compression
 
         private void SlideEnd()
         {
-            Bytes[_end++] = Convert.ToByte(_stream.ReadByte()); // test prędkości rzutowania
+            Bytes[_end++] = _stream.ReadByte(); //Convert.ToByte(_stream.ReadByte()); // test prędkości rzutowania
             _end %= Bytes.Length;
         }
 
@@ -160,7 +160,7 @@ namespace CryptZip.Compression
 
         public Task FindToken(int threadIndex, int start, int border)
         {
-            byte firstInLookAhead = Bytes[_border];
+            int firstInLookAhead = Bytes[_border];
 
             return Task.Run(() =>
             {
@@ -195,7 +195,7 @@ namespace CryptZip.Compression
                 if (_border < lastIndex)
                     lastOffset += Bytes.Length;
 
-                byte tokenByte = Bytes[(_border + lastLength) % Bytes.Length];
+                int tokenByte = Bytes[(_border + lastLength) % Bytes.Length];
 
                 tokens[threadIndex] = new Token { Offset = lastOffset, Length = lastLength, Byte = tokenByte };
             });
@@ -211,7 +211,7 @@ namespace CryptZip.Compression
             return _border == _end + Bytes.Length - 1;
         }
 
-        private int FindLast(byte searchItem, int start, int end)
+        private int FindLast(int searchItem, int start, int end)
         {
             if (end < start)
                 end += Bytes.Length;

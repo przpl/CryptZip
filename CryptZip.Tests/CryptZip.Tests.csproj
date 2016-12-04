@@ -75,8 +75,8 @@
     <Compile Include="Compression\DisctionaryCompressorTests.cs" />
     <Compile Include="Encryption\AESTests.cs" />
     <Compile Include="Encryption\ByteReaderTests.cs" />
-    <Compile Include="Encryption\CbcEncryptorTests.cs" />
-    <Compile Include="Encryption\EebEncryptorTests.cs" />
+    <Compile Include="Encryption\CBCTests.cs" />
+    <Compile Include="Encryption\ECBTests.cs" />
     <Compile Include="Encryption\KeyExtenderTests.cs" />
     <Compile Include="Encryption\PKCS7PaddingTests.cs" />
     <Compile Include="Encryption\Padding\PKCS7PaddingTests.cs" />

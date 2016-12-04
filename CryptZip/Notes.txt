@@ -2,12 +2,9 @@
 - dispose
 - optymalizacja zapisu znaków w LZ78 (3 bity oznaczające liczbę bitów, a potem dopiero indeks)
 - LZ78 optymalizacja wydajności: null zamiast Root gdy nie znaleziono
-- LZW optymalizacja trie, skoro pierwszy poziom (dzieci roota) są wypisane wszystkie <0;255> to zamiast szukać dla roota, wystarczy przejść pod odpowiedni indeks
-spod tablicy
 - LZ78 oraz LZW dynamiczna liczba bitów potrzebna do zapisu indeksu, w zależności od aktualnego rozmiaru słownika, słownik rośnie 512, 1024, 2048 itp.
 - pomiar przepustowości algorytmów LZ78 oraz LZW w zależności od rozmiaru słownika
-- optymalizacja Convert.ToByte do (byte)? np. w SlidingWindow, sprawdzić co jest szybsze w BenchmarkNET
-- LZ77 Token, optymalizacja: int zamiast byte, wtedy nie trzeba rzutować?
-- SlidingWindow NextToken: null zamiast Tokena, a bajt odczytywany bezpośrednio w LZ77
-- LZ78 write token, porównanie prędkości z int zamiast całego TrieNode jako parametr
-- możliwość zatrzymania pracy programu
+- liczba wątków w zależności od liczby procesorów
+- sliding window threads count
+
+- odczyt bitów return (b >> bitNumber) & 1;

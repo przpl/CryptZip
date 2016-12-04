@@ -10,7 +10,6 @@ namespace CryptZip.Encryption
 
         protected readonly IPadding Padding;
         protected byte[] Block;
-        protected long Index;
         protected Stream Input, Output;
 
         protected Encryptor(ICipher cipher, IPadding padding)
@@ -25,7 +24,6 @@ namespace CryptZip.Encryption
             Output = output;
             ValidateArguments();
 
-            Index = input.Position;
             Block = new byte[Cipher.BlockSize];
         }
 
@@ -35,11 +33,10 @@ namespace CryptZip.Encryption
             Output = output;
             ValidateArguments();
 
-            Index = input.Position;
             Block = new byte[Cipher.BlockSize];
 
 
-            if ((input.Length - input.Position)%Cipher.BlockSize != 0)
+            if ((input.Length - input.Position) % Cipher.BlockSize != 0)
                 throw new ArgumentException(nameof(input), "Input data must be divisible by " + Cipher.BlockSize + ".");
         }
 
@@ -48,10 +45,9 @@ namespace CryptZip.Encryption
             var blockIndex = 0;
             while (blockIndex < Block.Length)
             {
-                Block[blockIndex++] = (byte) Input.ReadByte();
-                Index++;
+                Block[blockIndex++] = (byte)Input.ReadByte();
 
-                if (Index == Input.Length && blockIndex < Block.Length)
+                if (Input.Position == Input.Length && blockIndex < Block.Length)
                 {
                     Padding.Add(Block, blockIndex - 1);
                     break;
@@ -67,7 +63,12 @@ namespace CryptZip.Encryption
 
         protected bool IsLastBlock()
         {
-            return Index > Input.Length - 16;
+            return Input.Position > Input.Length - 16;
+        }
+
+        protected bool DataNotEnded()
+        {
+            return Input.Position < Input.Length;
         }
 
         private void ValidateArguments()

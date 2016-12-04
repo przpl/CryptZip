@@ -1,14 +1,14 @@
-﻿using System.IO;
-using System.Linq;
-using CryptZip.Encryption;
+﻿using CryptZip.Encryption;
 using CryptZip.Encryption.Padding;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhino.Mocks;
+using System.IO;
+using System.Linq;
 
 namespace CryptZip.Tests.Encryption
 {
     [TestClass]
-    public class EebEncryptorTests
+    public class ECBTests
     {
         [TestMethod]
         public void Encrypt_EncryptsBlock_Encrypted()

@@ -50,8 +50,8 @@ namespace CryptZip.Encryption
 
         private uint[] Round(TwofishMDS mds, uint[] K, int round)
         {
-            uint F0 = TwofishFunction.h(mds, K[0], _key.SBox); // funkcja g
-            uint F1 = TwofishFunction.h(mds, Word32Bits.RotateLeft(K[1], 8), _key.SBox); // funkcja g
+            uint F0 = TwofishFunction.h(mds, K[0], _key.SBox);
+            uint F1 = TwofishFunction.h(mds, Word32Bits.RotateLeft(K[1], 8), _key.SBox);
             K[2] ^= F0 + F1 + _key.K[2*round + 8];
             K[2] = Word32Bits.RotateRight(K[2], 1);
             K[3] = Word32Bits.RotateLeft(K[3], 1) ^ (F0 + 2 * F1 + _key.K[2*round + 9]);
@@ -116,7 +116,7 @@ namespace CryptZip.Encryption
 
         private uint[] ReverseRound(TwofishMDS mds, uint[] K, int round)
         {
-            uint F0 = TwofishFunction.h(mds, K[2], _key.SBox); // funkcja g
+            uint F0 = TwofishFunction.h(mds, K[2], _key.SBox);
             uint F1 = TwofishFunction.h(mds, Word32Bits.RotateLeft(K[3], 8), _key.SBox);
             K[1] ^= F0 + 2*F1 + _key.K[39 - 2*round];
             K[1] = Word32Bits.RotateRight(K[1], 1);

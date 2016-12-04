@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace CryptZip.Tests.Encryption
 {
     [TestClass]
-    public class CbcEncryptorTests
+    public class CBCTests
     {
         [TestMethod]
         public void Encrypt_EncryptsBlock_Encrypted()

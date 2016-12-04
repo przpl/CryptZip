@@ -12,8 +12,8 @@ namespace CryptZip.Tests.Compression
         {
             MemoryStream stream = new MemoryStream(new byte[] {0, 1, 2, 3, 4, 5});
             SlidingWindow window = new SlidingWindow(stream, 4, 3);
-            byte[] bytes = window.Bytes;
-            CollectionAssert.AreEqual(new byte[] {0,1,2,0,0,0,0}, bytes);
+            var bytes = window.Bytes;
+            CollectionAssert.AreEqual(new [] {0,1,2,0,0,0,0}, bytes);
         }
 
         [TestMethod]
@@ -22,8 +22,8 @@ namespace CryptZip.Tests.Compression
             MemoryStream stream = new MemoryStream(new byte[] { 0, 1, 2, 3, 4, 5 });
             SlidingWindow window = new SlidingWindow(stream, 4, 3);
             window.Slide(1);
-            byte[] bytes = window.Bytes;
-            CollectionAssert.AreEqual(new byte[] { 0, 1, 2, 3, 0, 0, 0 }, bytes);
+            var bytes = window.Bytes;
+            CollectionAssert.AreEqual(new [] { 0, 1, 2, 3, 0, 0, 0 }, bytes);
         }
 
         [TestMethod]
@@ -32,8 +32,8 @@ namespace CryptZip.Tests.Compression
             MemoryStream stream = new MemoryStream(new byte[] { 0, 1, 2, 3, 4, 5 });
             SlidingWindow window = new SlidingWindow(stream, 4, 3);
             window.Slide(3);
-            byte[] bytes = window.Bytes;
-            CollectionAssert.AreEqual(new byte[] { 0, 1, 2, 3, 4, 5, 0 }, bytes);
+            var bytes = window.Bytes;
+            CollectionAssert.AreEqual(new [] { 0, 1, 2, 3, 4, 5, 0 }, bytes);
         }
 
         [TestMethod]
@@ -42,8 +42,8 @@ namespace CryptZip.Tests.Compression
             MemoryStream stream = new MemoryStream(new byte[] { 0, 1, 2, 3, 4, 5, 6, 7 });
             SlidingWindow window = new SlidingWindow(stream, 4, 3);
             window.Slide(5);
-            byte[] bytes = window.Bytes;
-            CollectionAssert.AreEqual(new byte[] { 7, 1, 2, 3, 4, 5, 6 }, bytes);
+            var bytes = window.Bytes;
+            CollectionAssert.AreEqual(new [] { 7, 1, 2, 3, 4, 5, 6 }, bytes);
         }
 
         [TestMethod]
@@ -52,8 +52,8 @@ namespace CryptZip.Tests.Compression
             MemoryStream stream = new MemoryStream(new byte[] { 0, 1, 2, 3, 4, 5 });
             SlidingWindow window = new SlidingWindow(stream, 4, 3);
             window.Slide(6);
-            byte[] bytes = window.Bytes;
-            CollectionAssert.AreEqual(new byte[] { 0, 1, 2, 3, 4, 5, 0 }, bytes);
+            var bytes = window.Bytes;
+            CollectionAssert.AreEqual(new [] { 0, 1, 2, 3, 4, 5, 0 }, bytes);
         }
 
         [TestMethod]

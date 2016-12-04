@@ -27,7 +27,7 @@ namespace CryptZip.Encryption
             var previousBlock = new byte[IV.Length];
             IV.CopyTo(previousBlock, 0);
 
-            while (Index < input.Length)
+            while (DataNotEnded())
             {
                 ReadBlock();
                 Block = Block.XOR(previousBlock);
@@ -59,7 +59,7 @@ namespace CryptZip.Encryption
             var nextBlock = new byte[IV.Length];
             IV.CopyTo(nextBlock, 0);
 
-            while (Index < input.Length)
+            while (DataNotEnded())
             {
                 ReadBlock();
                 Block.CopyTo(nextBlock, 0);

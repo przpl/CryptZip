@@ -1,5 +1,4 @@
-﻿
-namespace CryptZip.Encryption
+﻿namespace CryptZip.Encryption
 {
     public interface ICipher
     {
