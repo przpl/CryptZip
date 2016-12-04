@@ -141,6 +141,7 @@ namespace CryptZip
                     timeInfo += seconds + " seconds";
                 statusLabel.Text += timeInfo;
             }
+            timeLabel.Text = "00:00";
         }
 
         private void SwitchControls(bool enabled)
