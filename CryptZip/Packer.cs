@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CryptZip
 {
-    public abstract class Packer
+    public abstract class Packer : IPacker
     {
         public ICompressor Compressor { get; set; }
         public IEncryptor Encryptor { get; set; } // interfejs zamiast klasy

@@ -1,0 +1,530 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="CryptZip.CollectionExtensions" Collapsed="true">
+    <Position X="15.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAACAgAQAAAAAAAAAAAAAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>CollectionExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.CompressionPacker" Collapsed="true">
+    <Position X="6.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CompressionPacker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.EncryptionPacker" Collapsed="true">
+    <Position X="8" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EncryptionPacker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.FileHeader" Collapsed="true">
+    <Position X="20.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAQAAAAAAAAAgAAIAAEAAIAAAAAAAAAA=</HashCode>
+      <FileName>FileHeader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.FullPacker" Collapsed="true">
+    <Position X="9.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FullPacker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.MainForm" Collapsed="true">
+    <Position X="22.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAkQQGQA0V4AAACKAAFCAAIFSEABIAgiAIAAAAI=</HashCode>
+      <FileName>MainForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.Matrix" Collapsed="true">
+    <Position X="24" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACEAAAAABAAAAAAAAAAAAAAAAAAhAAAA=</HashCode>
+      <FileName>Matrix.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.Mode" Collapsed="true">
+    <Position X="13.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Mode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.CompressorId" Collapsed="true">
+    <Position X="17" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAEAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Mode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.CipherId" Collapsed="true">
+    <Position X="13.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAQAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Mode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.EncryptorId" Collapsed="true">
+    <Position X="18.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Mode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.Packer" Collapsed="true">
+    <Position X="8" Y="5" Width="1.5" />
+    <NestedTypes>
+      <Delegate Name="CryptZip.Packer.StatusChangedHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Packer.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="CryptZip.Packer.WorkFinishedHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Packer.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <AssociationLine Name="Encryptor" Type="CryptZip.Encryption.IEncryptor" FixedFromPoint="true">
+      <Path>
+        <Point X="9.5" Y="5.25" />
+        <Point X="14.5" Y="5.25" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AEAAABQAACAAQAAAAAAIAAAGEEABAAQAAgAgAACAAAg=</HashCode>
+      <FileName>Packer.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Compressor" />
+      <Property Name="Encryptor" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.699" />
+  </Class>
+  <Class Name="CryptZip.StatusEventArgs" Collapsed="true">
+    <Position X="22.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Packer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.PowerCalculator" Collapsed="true">
+    <Position X="17" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>PowerCalculator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.Program" Collapsed="true">
+    <Position X="18.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.StringExtensions" Collapsed="true">
+    <Position X="24" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>StringExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.Word32Bits" Collapsed="true">
+    <Position X="24" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACACAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAQIEA=</HashCode>
+      <FileName>Word32Bits.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.Word4Bits" Collapsed="true">
+    <Position X="18.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Word4Bits.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.Compression.BitConverter" Collapsed="true">
+    <Position X="17" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAgEAAQAAAA=</HashCode>
+      <FileName>Compression\BitConverter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.Compression.BitReader" Collapsed="true">
+    <Position X="18.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAgACAAAAAAAAEAAAAAEBA=</HashCode>
+      <FileName>Compression\BitReader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.Compression.BitWriter" Collapsed="true">
+    <Position X="20.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAEIABA=</HashCode>
+      <FileName>Compression\BitWriter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.Compression.IndexableTrie" Collapsed="true">
+    <Position X="8.75" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAABAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Compression\IndexableTrie.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="this[System.Int32]" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CryptZip.Compression.LZ77" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="1.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAABhIBAAAQAACAAEAAEBggAIAAAQEgAAAAAAA=</HashCode>
+      <FileName>Compression\LZ77.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CryptZip.Compression.LZ78" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="3" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABIAAgAQAACAA4AAAFAAgIAAAAAAEAAIAAA=</HashCode>
+      <FileName>Compression\LZ78.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CryptZip.Compression.LZW" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ASAAAAAEAJIAAgAQAACAAIAAAFAAwYAgAAAAAAAIAAA=</HashCode>
+      <FileName>Compression\LZW.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CryptZip.Compression.SlidingBuffer" Collapsed="true">
+    <Position X="18.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAQQAAAA=</HashCode>
+      <FileName>Compression\SlidingBuffer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.Compression.SlidingWindow" Collapsed="true">
+    <Position X="20.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAMGAAAAAgAIgAgAAAQQECAQAAAAAAAAABGIAAQEFBA=</HashCode>
+      <FileName>Compression\SlidingWindow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.Compression.Token" Collapsed="true">
+    <Position X="17" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAABABAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Compression\Token.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.Compression.Trie" Collapsed="true">
+    <Position X="8.75" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIIIAAAACAQAAAAAAAIAAQBAAAAAAAAAQAAAABAAAA=</HashCode>
+      <FileName>Compression\Trie.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_root" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CryptZip.Compression.TrieNode" Collapsed="true">
+    <Position X="11" Y="13" Width="1.5" />
+    <AssociationLine Name="Parent" Type="CryptZip.Compression.TrieNode" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="11.438" Y="13" />
+        <Point X="11.438" Y="12.57" />
+        <Point X="12.125" Y="12.57" />
+        <Point X="12.125" Y="13" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEQAAAAAAAAAAAAAEgAABAAAA=</HashCode>
+      <FileName>Compression\TrieNode.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Parent" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CryptZip.Encryption.AES" Collapsed="true">
+    <Position X="11.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAACABAAAAAAIQQEADAAAAAIAgAAIAAARgAIAIAAAE=</HashCode>
+      <FileName>Encryption\AES.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_key" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CryptZip.Encryption.ByteReader" Collapsed="true">
+    <Position X="22.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEIBAAAAAAAAAAAAAAAACAAAEAAACAAAAAAEIA=</HashCode>
+      <FileName>Encryption\ByteReader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.Encryption.ByteWriter" Collapsed="true">
+    <Position X="24" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAQAAAAAIgAAAIBAAAAAA=</HashCode>
+      <FileName>Encryption\ByteWriter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.Encryption.CBC" Collapsed="true">
+    <Position X="15.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAEAAAAAAAAQAAAAAAAAAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Encryption\CBC.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.Encryption.Cipher" Collapsed="true">
+    <Position X="11.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAgAAAAAAQAAAAAAAAAAAAAAABAAAAACAAAAA=</HashCode>
+      <FileName>Encryption\Cipher.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CryptZip.Encryption.ECB" Collapsed="true">
+    <Position X="13.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAEAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Encryption\ECB.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.Encryption.Encryptor" Collapsed="true">
+    <Position X="14.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IQAEAAAAAAAAAAAQAAAIAAAAEEAABIAAAAIAAABAAIA=</HashCode>
+      <FileName>Encryption\Encryptor.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Cipher" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CryptZip.Encryption.IV" Collapsed="true">
+    <Position X="24" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Encryption\IV.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.Encryption.KeyExtender" Collapsed="true">
+    <Position X="13.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Encryption\KeyExtender.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.Encryption.S_Box" Collapsed="true">
+    <Position X="24" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAQAAAAAAAAEIAAAAAAAAAA=</HashCode>
+      <FileName>Encryption\Rijndael\S-Box.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.Encryption.Serpent" Collapsed="true">
+    <Position X="14.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAQAACAAAAAAAEAAAAAIAAAAAIAACA=</HashCode>
+      <FileName>Encryption\Serpent.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_key" />
+      <Field Name="_sBox" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CryptZip.Encryption.Twofish" Collapsed="true">
+    <Position X="8.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAIAAAAQAQAASAAAACBAAAAAAAAIAAAgJAAAA=</HashCode>
+      <FileName>Encryption\Twofish.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_key" />
+      <Field Name="_mds" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CryptZip.Encryption.Padding.PKCS7Padding" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Encryption\Padding\PKCS7Padding.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CryptZip.Encryption.Rijndael.AESFunction" Collapsed="true">
+    <Position X="13.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAEIAICBAEAIAABAAAACAAAAgAAAI=</HashCode>
+      <FileName>Encryption\Rijndael\AESFunction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.Encryption.Rijndael.AesKey" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQQBAAAAAAAAAIAACBAAAABEAAAAkAAAAQAIAAABADA=</HashCode>
+      <FileName>Encryption\Rijndael\AESKey.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.189" />
+  </Class>
+  <Class Name="CryptZip.Encryption.Rijndael.GaloisTable" Collapsed="true">
+    <Position X="22.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAAAQAAAAAgAABAAAAAA=</HashCode>
+      <FileName>Encryption\Rijndael\GaloisTable.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.Encryption.Rijndael.Rcon" Collapsed="true">
+    <Position X="20.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Encryption\Rijndael\Rcon.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.Encryption.SerpentAlgorithms.LinearTransformator" Collapsed="true">
+    <Position X="15.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Encryption\SerpentAlgorithms\LinearTransformator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.Encryption.SerpentAlgorithms.SerpentKey" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="13.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAEAAAAAAACAAABAAAAAAAEAABAAAAAAAIAAAAA=</HashCode>
+      <FileName>Encryption\SerpentAlgorithms\SerpentKey.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CryptZip.Encryption.SerpentAlgorithms.Uint128" Collapsed="true">
+    <Position X="22.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAAAAACAAAAAAABAAIAAAAAAAgAAA=</HashCode>
+      <FileName>Encryption\SerpentAlgorithms\SerpentKey.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.Encryption.SerpentAlgorithms.SerpentSbox" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Encryption\SerpentAlgorithms\SerpentSbox.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CryptZip.Encryption.TwofishAlgorithms.TwofishFunction" Collapsed="true">
+    <Position X="17" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAQCEAAAAAAAA=</HashCode>
+      <FileName>Encryption\TwofishAlgorithms\TwofishFunction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.Encryption.TwofishAlgorithms.TwofishKey" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAEAgAUAAAAAAAAACAAAAAAAAQAAAAACCQAIAAABA=</HashCode>
+      <FileName>Encryption\TwofishAlgorithms\TwofishKey.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CryptZip.Encryption.TwofishAlgorithms.TwofishMDS" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAABAAAAAAAAAAAAAAAAAAYAAwA=</HashCode>
+      <FileName>Encryption\TwofishAlgorithms\TwofishMDS.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CryptZip.Properties.Resources" Collapsed="true">
+    <Position X="22.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CryptZip.Properties.Settings" Collapsed="true">
+    <Position X="17" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="CryptZip.Compression.ICompressor" Collapsed="true">
+    <Position X="3" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Compression\ICompressor.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CryptZip.Encryption.ICipher" Collapsed="true">
+    <Position X="11.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Encryption\ICipher.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CryptZip.Encryption.IEncryptor" Collapsed="true">
+    <Position X="14.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IQAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Encryption\IEncryptor.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CryptZip.Encryption.Padding.IPadding" Collapsed="true">
+    <Position X="18.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Encryption\Padding\IPadding.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CryptZip.Encryption.Rijndael.IAesKey" Collapsed="true">
+    <Position X="11.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAACAAAAABAAAAAEAAAAAAIAAAAADA=</HashCode>
+      <FileName>Encryption\Rijndael\AESKey.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CryptZip.Encryption.SerpentAlgorithms.ISerpentKey" Collapsed="true">
+    <Position X="13.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>Encryption\SerpentAlgorithms\SerpentKey.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CryptZip.Encryption.SerpentAlgorithms.ISerpentSbox" Collapsed="true">
+    <Position X="15.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Encryption\SerpentAlgorithms\SerpentSbox.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CryptZip.Encryption.TwofishAlgorithms.ITwofishKey" Collapsed="true">
+    <Position X="7.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>Encryption\TwofishAlgorithms\TwofishKey.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CryptZip.Encryption.TwofishAlgorithms.ITwofishMDS" Collapsed="true">
+    <Position X="9.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Encryption\TwofishAlgorithms\TwofishMDS.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="CryptZip.ValueRepresentation" Collapsed="true">
+    <Position X="19.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Word32Bits.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
