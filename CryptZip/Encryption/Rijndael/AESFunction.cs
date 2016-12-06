@@ -14,10 +14,10 @@ namespace CryptZip.Encryption.Rijndael
 
         private static readonly byte[][] _inversedGaloisField =
             {
-                new byte[]{0x0e, 0x0b, 0x0d, 0x09},
-                new byte[]{0x09, 0x0e, 0x0b, 0x0d},
-                new byte[]{0x0d, 0x09, 0x0e, 0x0b},
-                new byte[]{0x0b, 0x0d, 0x09, 0x0e}
+                new byte[]{14, 11, 13, 9},
+                new byte[]{9, 14, 11, 13},
+                new byte[]{13, 9, 14, 11},
+                new byte[]{11, 13, 9, 14}
             };
 
         public static byte[][] SubBytes(byte[][] array)

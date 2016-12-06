@@ -4,13 +4,19 @@ namespace CryptZip.Encryption
 {
     public class Serpent : Cipher
     {
-        private readonly SerpentKey _key;
-        private readonly SerpentSbox _sBox;
+        private readonly ISerpentKey _key;
+        private readonly ISerpentSbox _sBox;
 
         public Serpent(byte[] key) : base(key)
         {
             _key = new SerpentKey(key);
             _sBox = new SerpentSbox();
+        }
+
+        public Serpent(ISerpentKey key, ISerpentSbox sBox) : base(key.RawBytes)
+        {
+            _key = key;
+            _sBox = sBox;
         }
 
         public override byte[] Encrypt(byte[] block)

@@ -4,8 +4,8 @@ namespace CryptZip.Encryption
 {
     public class Twofish : Cipher
     {
-        private readonly TwofishKey _key;
-        private readonly TwofishMDS _mds;
+        private readonly ITwofishKey _key;
+        private readonly ITwofishMDS _mds;
 
         private ByteWriter _byteWriter;
 
@@ -13,6 +13,12 @@ namespace CryptZip.Encryption
         {
             _key = new TwofishKey(key);
             _mds = new TwofishMDS();
+        }
+
+        public Twofish(ITwofishKey key, ITwofishMDS mds) : base(key.RawBytes)
+        {
+            _key = key;
+            _mds = mds;
         }
 
         public override byte[] Encrypt(byte[] block)
@@ -38,7 +44,7 @@ namespace CryptZip.Encryption
             return K;
         }
 
-        private uint[] Rounds(TwofishMDS mds, uint[] K)
+        private uint[] Rounds(ITwofishMDS mds, uint[] K)
         {
             for (int round = 0; round < 16; round++)
             {
@@ -48,7 +54,7 @@ namespace CryptZip.Encryption
             return K;
         }
 
-        private uint[] Round(TwofishMDS mds, uint[] K, int round)
+        private uint[] Round(ITwofishMDS mds, uint[] K, int round)
         {
             uint F0 = TwofishFunction.h(mds, K[0], _key.SBox);
             uint F1 = TwofishFunction.h(mds, Word32Bits.RotateLeft(K[1], 8), _key.SBox);
@@ -104,7 +110,7 @@ namespace CryptZip.Encryption
             return _byteWriter.Bytes;
         }
 
-        private uint[] ReverseRounds(TwofishMDS mds, uint[] K)
+        private uint[] ReverseRounds(ITwofishMDS mds, uint[] K)
         {
             for (int round = 0; round < 16; round++)
             {
@@ -114,7 +120,7 @@ namespace CryptZip.Encryption
             return K;
         }
 
-        private uint[] ReverseRound(TwofishMDS mds, uint[] K, int round)
+        private uint[] ReverseRound(ITwofishMDS mds, uint[] K, int round)
         {
             uint F0 = TwofishFunction.h(mds, K[2], _key.SBox);
             uint F1 = TwofishFunction.h(mds, Word32Bits.RotateLeft(K[3], 8), _key.SBox);

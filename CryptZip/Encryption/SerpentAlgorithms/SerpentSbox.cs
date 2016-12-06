@@ -1,7 +1,13 @@
 ﻿
 namespace CryptZip.Encryption.SerpentAlgorithms
 {
-    public class SerpentSbox
+    public interface ISerpentSbox
+    {
+        uint[] Substitute(uint w0, uint w1, uint w2, uint w3, int sBoxIndex);
+        uint[] Inverse(uint w0, uint w1, uint w2, uint w3, int sBoxIndex);
+    }
+
+    public class SerpentSbox : ISerpentSbox
     {
         public uint[] Substitute(uint w0, uint w1, uint w2, uint w3, int sBoxIndex)
         {

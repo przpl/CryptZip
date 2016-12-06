@@ -2,10 +2,18 @@
 
 namespace CryptZip.Encryption.TwofishAlgorithms
 {
-    public class TwofishKey
+    public interface ITwofishKey
+    {
+        uint[] K { get; }
+        uint[] SBox { get; }
+        byte[] RawBytes { get; }
+    }
+
+    public class TwofishKey : ITwofishKey
     {
         public uint[] K { get; }
         public uint[] SBox { get; }
+        public byte[] RawBytes { get; }
 
         private readonly byte[] _key;
 
@@ -14,6 +22,7 @@ namespace CryptZip.Encryption.TwofishAlgorithms
             if (key.Length > 32)
                 throw new ArgumentOutOfRangeException("_key", "Maximum key length is 256 bits.");
 
+            RawBytes = key;
             _key = AddPadding(key);
 
             uint[] M = SplitInto32BitWords(_key);

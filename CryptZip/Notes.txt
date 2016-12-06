@@ -6,5 +6,6 @@
 - pomiar przepustowości algorytmów LZ78 oraz LZW w zależności od rozmiaru słownika
 - liczba wątków w zależności od liczby procesorów
 - sliding window threads count
+- pozbyć się class AesFunction, TwofishFunction itp.
 
 - odczyt bitów return (b >> bitNumber) & 1;

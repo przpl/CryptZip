@@ -3,21 +3,34 @@ using System.Collections.Generic;
 
 namespace CryptZip.Encryption.Rijndael
 {
-    public class AESKey
+    public interface IAesKey
+    {
+        int RoundsCount { get; }
+        byte[] Bytes { get; }
+        byte[] RawBytes { get; }
+        int Length { get; }
+        byte[][] NextSubKey();
+        byte[][] PreviousSubKey();
+        byte this[int index] { get; }
+    }
+
+    public class AesKey : IAesKey
     {
         public int RoundsCount { get; private set; }
         public byte[] Bytes { get; }
+        public byte[] RawBytes { get; }
         public int Length => Bytes.Length;
 
         private List<byte> _expandedKey;
         private int _keyIndex, _backwardKeyIndex;
         private readonly byte[][] _roundKey;
 
-        public AESKey(byte[] key)
+        public AesKey(byte[] key)
         {
             if (!IsValidKeyLength(key))
                 throw new ArgumentException(nameof(key), "Key length has to be equal to 128 bits, 192 bits or 256 bits.");
 
+            RawBytes = key;
             Bytes = Expand(key);
             _backwardKeyIndex = Bytes.Length - 1;
             _roundKey = new byte[4][];

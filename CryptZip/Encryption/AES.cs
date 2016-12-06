@@ -4,13 +4,20 @@ namespace CryptZip.Encryption
 {
     public class AES : Cipher
     {
-        private readonly AESKey _key;
+        private readonly IAesKey _key;
         private byte[] _block;
         private byte[][] _stateMatrix;
 
         public AES(byte[] key) : base(key)
         {
-            _key = new AESKey(key);
+            _key = new AesKey(key);
+
+            InitializeStateMatrix();
+        }
+
+        public AES(IAesKey key) : base(key.RawBytes)
+        {
+            _key = key;
 
             InitializeStateMatrix();
         }

@@ -4,7 +4,7 @@ namespace CryptZip.Encryption.TwofishAlgorithms
 {
     public static class TwofishFunction
     {
-        public static uint h(TwofishMDS mds, uint x, uint[] L)
+        public static uint h(ITwofishMDS mds, uint x, uint[] L)
         {
             int k = L.Length;
             uint[] y = Word32Bits.ToUintBytes(x);

@@ -1,7 +1,11 @@
-﻿
-namespace CryptZip.Encryption.TwofishAlgorithms
+﻿namespace CryptZip.Encryption.TwofishAlgorithms
 {
-    public class TwofishMDS
+    public interface ITwofishMDS
+    {
+        uint Multiply(uint[] y);
+    }
+
+    public class TwofishMDS : ITwofishMDS
     {
         private readonly uint[][] _MDS =
         {

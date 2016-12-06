@@ -2,9 +2,16 @@
 
 namespace CryptZip.Encryption.SerpentAlgorithms
 {
-    public class SerpentKey
+    public interface ISerpentKey
+    {
+        Uint128[] K { get; }
+        byte[] RawBytes { get; }
+    }
+
+    public class SerpentKey : ISerpentKey
     {
         public Uint128[] K { get; private set; }
+        public byte[] RawBytes { get; }
 
         private const uint PHI = 0x9E3779B9;
 
@@ -15,6 +22,8 @@ namespace CryptZip.Encryption.SerpentAlgorithms
 
             if (key.Length % 4 != 0)
                 throw new ArgumentException("Key length has to be divisible by 4.", nameof(key));
+
+            RawBytes = key;
 
             var words = new uint[132];
 
