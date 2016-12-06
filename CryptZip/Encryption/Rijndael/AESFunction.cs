@@ -22,12 +22,12 @@ namespace CryptZip.Encryption.Rijndael
 
         public static byte[][] SubBytes(byte[][] array)
         {
-            return S_Box.Transform(array);
+            return AesSBox.Transform(array);
         }
 
         public static byte[][] ReverseSubBytes(byte[][] array)
         {
-            return S_Box.Inverse(array);
+            return AesSBox.Inverse(array);
         }
 
         public static byte[][] ShiftRows(byte[][] array)

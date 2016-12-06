@@ -47,7 +47,8 @@ namespace CryptZip.Compression
 
         private void WriteData()
         {
-            _window = new SlidingWindow(_input, _searchBufferLength, _lookAheadLength);
+            int coreCount = Environment.ProcessorCount;
+            _window = new SlidingWindow(_input, _searchBufferLength, _lookAheadLength, coreCount);
             _bitWriter = new BitWriter(_output);
 
             while (!_window.LookAheadEmpty)

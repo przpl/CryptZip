@@ -10,6 +10,7 @@ namespace CryptZip.Compression
         protected int NextNodeIndex;
 
         private readonly TrieNode _root;
+        private const int ROOT_INDEX = 0;
 
         public Trie()
         {
@@ -76,7 +77,7 @@ namespace CryptZip.Compression
 
         public static bool IsRoot(TrieNode node)
         {
-            return node.Index == 0;
+            return node.Index == ROOT_INDEX;
         }
     }
 }

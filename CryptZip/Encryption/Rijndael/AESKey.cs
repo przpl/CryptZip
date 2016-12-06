@@ -74,7 +74,7 @@ namespace CryptZip.Encryption.Rijndael
             {
                 byte[] lastFourBytes = _expandedKey.LastElements(4);
                 lastFourBytes = lastFourBytes.ShiftToLeft();
-                lastFourBytes = S_Box.Transform(lastFourBytes);
+                lastFourBytes = AesSBox.Transform(lastFourBytes);
                 Rcon.Apply(lastFourBytes, iteration);
                 IEnumerable<byte> fourBytes = _expandedKey.GetRange(_expandedKey.Count - key.Length, 4);
                 lastFourBytes = lastFourBytes.XOR(fourBytes);
@@ -91,7 +91,7 @@ namespace CryptZip.Encryption.Rijndael
                 if (key.Length == 32 && _expandedKey.Count < 240)
                 {
                     lastFourBytes = _expandedKey.LastElements(4);
-                    lastFourBytes = S_Box.Transform(lastFourBytes);
+                    lastFourBytes = AesSBox.Transform(lastFourBytes);
                     fourBytes = _expandedKey.GetRange(_expandedKey.Count - key.Length, 4);
                     lastFourBytes = lastFourBytes.XOR(fourBytes);
                     _expandedKey.AddRange(lastFourBytes);

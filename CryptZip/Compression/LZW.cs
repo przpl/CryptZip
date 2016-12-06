@@ -72,8 +72,8 @@ namespace CryptZip.Compression
         private void WriteToken(TrieNode lastNode, byte symbol)
         {
             _trie.Add(lastNode, symbol);
-            _bitWriter.Write(BitConverter.ToBits(BitConverter.MinimalNumberOfBits(lastNode.Index) - 1, 5));
-            _bitWriter.Write(BitConverter.ToBits(lastNode.Index));
+            int bitsPerIndex = BitConverter.MinimalNumberOfBits(_trie.Count);
+            _bitWriter.Write(BitConverter.ToBits(lastNode.Index, bitsPerIndex));
         }
 
         public void Decompress(Stream input, Stream output)
@@ -121,8 +121,8 @@ namespace CryptZip.Compression
 
         private int ReadToken()
         {
-            int bitsPerToken = BitConverter.ToInt(_bitReader.Read(5)) + 1;
-            return BitConverter.ToInt(_bitReader.Read(bitsPerToken));
+            int bitsPerIndex = BitConverter.MinimalNumberOfBits(_indexableTrie.Count + 2);
+            return BitConverter.ToInt(_bitReader.Read(bitsPerIndex));
         }
 
         private void ReadString(TrieNode node)

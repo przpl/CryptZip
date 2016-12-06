@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 namespace CryptZip
@@ -89,7 +90,8 @@ namespace CryptZip
         private void Unpack()
         {
             var header = new FileHeader();
-            Packer packer = header.GetPacker(_filePath, keyTextBox.Text.ToBytes());
+            byte[] keyBytes = Encoding.UTF8.GetBytes(keyTextBox.Text);
+            Packer packer = header.GetPacker(_filePath, keyBytes);
             packer.StatusChanged += OnStatusChanged;
             packer.WorkFinished += OnWorkFinished;
 
@@ -164,7 +166,8 @@ namespace CryptZip
             if (!encryptCheckBox.Checked)
                 return null;
 
-            var key = KeyExtender.Extend(keyTextBox.Text.ToBytes(), _padding);
+            byte[] keyBytes = Encoding.UTF8.GetBytes(keyTextBox.Text);
+            var key = KeyExtender.Extend(keyBytes, _padding);
             switch (encryptComboBox.Text)
             {
                 case nameof(AES):

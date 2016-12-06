@@ -1,7 +1,6 @@
-﻿
-namespace CryptZip.Encryption
+﻿namespace CryptZip.Encryption.Rijndael
 {
-    public static class S_Box
+    public static class AesSBox
     {
         private static readonly byte[] _sBox =
             {

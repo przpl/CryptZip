@@ -1,7 +1,7 @@
 ﻿using CryptZip.Compression;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace CryptZip.Tests
+namespace CryptZip.Tests.Compression
 {
     [TestClass]
     public class TrieTests
@@ -9,10 +9,12 @@ namespace CryptZip.Tests
         [TestMethod]
         public void IndexOf_AddsOneSymbolElements_Added()
         {
-            Trie trie = new Trie();
+            var trie = new Trie();
+
             trie.Add(0);
             trie.Add(1);
             trie.Add(2);
+
             Assert.AreEqual(1, trie.FindRootChild(0).Index);
             Assert.AreEqual(2, trie.FindRootChild(1).Index);
             Assert.AreEqual(3, trie.FindRootChild(2).Index);
@@ -21,7 +23,7 @@ namespace CryptZip.Tests
         [TestMethod]
         public void IndexOf_AddsTwoSymbolsElements_Added()
         {
-            Trie trie = new Trie();
+            var trie = new Trie();
             trie.Add(0);
             trie.Add(1);
             trie.Add(2);
@@ -37,6 +39,27 @@ namespace CryptZip.Tests
             TrieNode twoNode = trie.FindRootChild(2);
             trie.Add(twoNode, 2);
             Assert.AreEqual(6, trie.FindChild(twoNode, 2).Index);
+        }
+
+        [TestMethod]
+        public void Count_NoElementsAdded_Zero()
+        {
+            var trie = new Trie();
+
+            Assert.AreEqual(0, trie.Count);
+        }
+
+        [TestMethod]
+        public void Count_AddsThreeElements_Three()
+        {
+            var trie = new Trie();
+
+            trie.Add(0);
+            trie.Add(1);
+            var node = trie.FindRootChild(1);
+            trie.Add(node, 2);
+
+            Assert.AreEqual(3, trie.Count);
         }
     }
 }

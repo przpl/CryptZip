@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 
-namespace CryptZip.Tests
+namespace CryptZip.Tests.Compression
 {
     [TestClass]
     public class LZ77Tests

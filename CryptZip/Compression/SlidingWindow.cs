@@ -16,7 +16,7 @@ namespace CryptZip.Compression
         private readonly Token[] tokens;
         private readonly int _threadsCount;
         
-        public SlidingWindow(Stream stream, int searchBufferLength, int lookAheadLength, int threadsCount = 8)
+        public SlidingWindow(Stream stream, int searchBufferLength, int lookAheadLength, int threadsCount)
         {
             _stream = stream;
             Bytes = new int[searchBufferLength + lookAheadLength];
