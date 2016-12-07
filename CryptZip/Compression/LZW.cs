@@ -98,7 +98,7 @@ namespace CryptZip.Compression
                 byte symbolFromTrie;
                 if (next > _indexableTrie.Count)
                     symbolFromTrie = GetSymbol(_indexableTrie[last]);
-                else 
+                else
                     symbolFromTrie = GetSymbol(_indexableTrie[next]);
                 _indexableTrie.Add(lastNode, symbolFromTrie);
 

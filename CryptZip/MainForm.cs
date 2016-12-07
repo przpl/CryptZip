@@ -158,6 +158,7 @@ namespace CryptZip
             processButton.Enabled = enabled;
             timeLabel.Visible = !enabled;
 
+            Cursor = enabled ? Cursor = DefaultCursor : Cursor = Cursors.WaitCursor;
             progressBar.Style = enabled ? ProgressBarStyle.Blocks : ProgressBarStyle.Marquee;
         }
 
