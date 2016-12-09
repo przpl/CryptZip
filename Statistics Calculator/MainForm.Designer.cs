@@ -41,8 +41,11 @@
             this.charCountLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.calculateButton = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.saveToClipboardButton = new System.Windows.Forms.Button();
             this.fileGroupBox.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // fileGroupBox
@@ -87,17 +90,15 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.histogramCheckBox);
             this.groupBox1.Controls.Add(this.entropyLabel);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.totalCharCountLabel);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.charCountLabel);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.calculateButton);
             this.groupBox1.Location = new System.Drawing.Point(12, 85);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(381, 121);
+            this.groupBox1.Size = new System.Drawing.Size(381, 91);
             this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Statistics";
@@ -105,11 +106,11 @@
             // histogramCheckBox
             // 
             this.histogramCheckBox.AutoSize = true;
-            this.histogramCheckBox.Location = new System.Drawing.Point(12, 94);
+            this.histogramCheckBox.Location = new System.Drawing.Point(6, 19);
             this.histogramCheckBox.Name = "histogramCheckBox";
-            this.histogramCheckBox.Size = new System.Drawing.Size(118, 17);
+            this.histogramCheckBox.Size = new System.Drawing.Size(145, 17);
             this.histogramCheckBox.TabIndex = 7;
-            this.histogramCheckBox.Text = "Generate histogram";
+            this.histogramCheckBox.Text = "Generate and save to file";
             this.histogramCheckBox.UseVisualStyleBackColor = true;
             // 
             // entropyLabel
@@ -174,7 +175,7 @@
             // 
             // calculateButton
             // 
-            this.calculateButton.Location = new System.Drawing.Point(300, 90);
+            this.calculateButton.Location = new System.Drawing.Point(312, 238);
             this.calculateButton.Name = "calculateButton";
             this.calculateButton.Size = new System.Drawing.Size(75, 23);
             this.calculateButton.TabIndex = 0;
@@ -182,13 +183,36 @@
             this.calculateButton.UseVisualStyleBackColor = true;
             this.calculateButton.Click += new System.EventHandler(this.calculateButton_Click);
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.histogramCheckBox);
+            this.groupBox2.Controls.Add(this.saveToClipboardButton);
+            this.groupBox2.Location = new System.Drawing.Point(12, 182);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(375, 50);
+            this.groupBox2.TabIndex = 11;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Histogram";
+            // 
+            // saveToClipboardButton
+            // 
+            this.saveToClipboardButton.Location = new System.Drawing.Point(255, 19);
+            this.saveToClipboardButton.Name = "saveToClipboardButton";
+            this.saveToClipboardButton.Size = new System.Drawing.Size(114, 23);
+            this.saveToClipboardButton.TabIndex = 8;
+            this.saveToClipboardButton.Text = "Copy to clipboard";
+            this.saveToClipboardButton.UseVisualStyleBackColor = true;
+            this.saveToClipboardButton.Click += new System.EventHandler(this.saveToClipboardButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(406, 215);
+            this.ClientSize = new System.Drawing.Size(406, 271);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.fileGroupBox);
+            this.Controls.Add(this.calculateButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "MainForm";
@@ -197,6 +221,8 @@
             this.fileGroupBox.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -215,6 +241,8 @@
         private System.Windows.Forms.Label totalCharCountLabel;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox histogramCheckBox;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Button saveToClipboardButton;
     }
 }
 

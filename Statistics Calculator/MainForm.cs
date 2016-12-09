@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -10,6 +9,7 @@ namespace Statistics_Calculator
     public partial class MainForm : Form
     {
         private string _filePath;
+        private Result _lastResult;
 
         public MainForm()
         {
@@ -40,11 +40,11 @@ namespace Statistics_Calculator
             var fileStream = new FileStream(_filePath, FileMode.Open, FileAccess.Read);
 
             var calc = new Calculator();
-            Result result = calc.Calculate(fileStream);
+            _lastResult = calc.Calculate(fileStream);
 
-            totalCharCountLabel.Text = result.TotalCount.ToString();
-            charCountLabel.Text = result.UniqueCount.ToString();
-            entropyLabel.Text = result.Entropy.ToString(CultureInfo.InvariantCulture);
+            totalCharCountLabel.Text = _lastResult.TotalCount.ToString();
+            charCountLabel.Text = _lastResult.UniqueCount.ToString();
+            entropyLabel.Text = _lastResult.Entropy.ToString(CultureInfo.InvariantCulture);
 
             if (histogramCheckBox.Checked)
             {
@@ -52,20 +52,33 @@ namespace Statistics_Calculator
 
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {
-                    WriteHistogramData(sfd.FileName, result.Probabilities);
+                    WriteHistogramData(sfd.FileName);
                     Process.Start(sfd.FileName);
                 }
             }
         }
 
-        private void WriteHistogramData(string path, IEnumerable<double> probabilities)
+        private void WriteHistogramData(string path)
         {
             var writer = new StreamWriter(path);
 
-            foreach (var probability in probabilities)
+            foreach (var probability in _lastResult.Probabilities)
                 writer.WriteLine(probability);
 
             writer.Close();
+        }
+
+        private void saveToClipboardButton_Click(object sender, EventArgs e)
+        {
+            if (_lastResult == null)
+            {
+                MessageBox.Show("There is no data.");
+                return;
+            }
+
+            var probabilities = String.Join(Environment.NewLine, _lastResult.Probabilities);
+
+            Clipboard.SetText(probabilities);
         }
     }
 }
