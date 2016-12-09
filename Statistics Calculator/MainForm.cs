@@ -21,7 +21,10 @@ namespace Statistics_Calculator
             using (var openFileDialog = new OpenFileDialog())
             {
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
                     _filePath = openFileDialog.FileName;
+                    calculateButton_Click(null, EventArgs.Empty);
+                }
                 else
                     _filePath = null;
 
