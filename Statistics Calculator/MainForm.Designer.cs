@@ -33,6 +33,7 @@
             this.pathLabel = new System.Windows.Forms.Label();
             this.chooseFileButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.histogramCheckBox = new System.Windows.Forms.CheckBox();
             this.entropyLabel = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.totalCharCountLabel = new System.Windows.Forms.Label();
@@ -40,7 +41,6 @@
             this.charCountLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.calculateButton = new System.Windows.Forms.Button();
-            this.histogramCheckBox = new System.Windows.Forms.CheckBox();
             this.fileGroupBox.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -101,6 +101,16 @@
             this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Statistics";
+            // 
+            // histogramCheckBox
+            // 
+            this.histogramCheckBox.AutoSize = true;
+            this.histogramCheckBox.Location = new System.Drawing.Point(12, 94);
+            this.histogramCheckBox.Name = "histogramCheckBox";
+            this.histogramCheckBox.Size = new System.Drawing.Size(118, 17);
+            this.histogramCheckBox.TabIndex = 7;
+            this.histogramCheckBox.Text = "Generate histogram";
+            this.histogramCheckBox.UseVisualStyleBackColor = true;
             // 
             // entropyLabel
             // 
@@ -172,16 +182,6 @@
             this.calculateButton.UseVisualStyleBackColor = true;
             this.calculateButton.Click += new System.EventHandler(this.calculateButton_Click);
             // 
-            // histogramCheckBox
-            // 
-            this.histogramCheckBox.AutoSize = true;
-            this.histogramCheckBox.Location = new System.Drawing.Point(12, 94);
-            this.histogramCheckBox.Name = "histogramCheckBox";
-            this.histogramCheckBox.Size = new System.Drawing.Size(118, 17);
-            this.histogramCheckBox.TabIndex = 7;
-            this.histogramCheckBox.Text = "Generate histogram";
-            this.histogramCheckBox.UseVisualStyleBackColor = true;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -189,6 +189,8 @@
             this.ClientSize = new System.Drawing.Size(406, 215);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.fileGroupBox);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Statistics Calculator";
             this.fileGroupBox.ResumeLayout(false);

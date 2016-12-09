@@ -18,9 +18,12 @@ namespace Statistics_Calculator
             _totalCount = inputStream.Length;
             IEnumerable<double> probabilities = occurences.Select(GetProbability);
 
+            long totalCount = inputStream.Length;
+            inputStream.Close();
+
             return new Result
             {
-                TotalCount = inputStream.Length,
+                TotalCount = totalCount,
                 UniqueCount = occurences.Where(i => i > 0).Count(),
                 Entropy = GetEntropy(probabilities),
                 Probabilities = probabilities

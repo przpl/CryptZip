@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
@@ -47,11 +48,13 @@ namespace Statistics_Calculator
 
             if (histogramCheckBox.Checked)
             {
-                var sfd = new SaveFileDialog();
-                sfd.Filter = "txt files (*.txt)|*.txt";
+                var sfd = new SaveFileDialog {Filter = "txt files (*.txt)|*.txt"};
 
                 if (sfd.ShowDialog() == DialogResult.OK)
+                {
                     WriteHistogramData(sfd.FileName, result.Probabilities);
+                    Process.Start(sfd.FileName);
+                }
             }
         }
 
