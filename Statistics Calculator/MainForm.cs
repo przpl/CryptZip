@@ -42,7 +42,13 @@ namespace Statistics_Calculator
 
             var fileStream = new FileStream(_filePath, FileMode.Open, FileAccess.Read);
 
-            var calc = new Calculator();
+            Calculator calc = null;
+
+            if (roundUpCheckBox.Checked)
+                calc = new RoundUpCalculator();
+            else 
+                calc = new Calculator();
+
             _lastResult = calc.Calculate(fileStream);
 
             totalCharCountLabel.Text = _lastResult.TotalCount.ToString();

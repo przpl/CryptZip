@@ -9,7 +9,7 @@ namespace Statistics_Calculator
     {
         private long _totalCount;
 
-        public Result Calculate(FileStream inputStream)
+        public virtual Result Calculate(FileStream inputStream)
         {
             int[] occurences = new int[256];
             while (inputStream.Position < inputStream.Length)

@@ -33,6 +33,10 @@
             this.pathLabel = new System.Windows.Forms.Label();
             this.chooseFileButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.redundancyLabel = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.maxEntropyLabel = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.entropyLabel = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.totalCharCountLabel = new System.Windows.Forms.Label();
@@ -43,10 +47,7 @@
             this.calculateButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.saveToClipboardButton = new System.Windows.Forms.Button();
-            this.maxEntropyLabel = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.redundancyLabel = new System.Windows.Forms.Label();
+            this.roundUpCheckBox = new System.Windows.Forms.CheckBox();
             this.fileGroupBox.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -94,6 +95,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.roundUpCheckBox);
             this.groupBox1.Controls.Add(this.redundancyLabel);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.maxEntropyLabel);
@@ -106,10 +108,50 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(12, 85);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(381, 140);
+            this.groupBox1.Size = new System.Drawing.Size(381, 164);
             this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Statistics";
+            // 
+            // redundancyLabel
+            // 
+            this.redundancyLabel.AutoSize = true;
+            this.redundancyLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.redundancyLabel.Location = new System.Drawing.Point(97, 110);
+            this.redundancyLabel.Name = "redundancyLabel";
+            this.redundancyLabel.Size = new System.Drawing.Size(16, 17);
+            this.redundancyLabel.TabIndex = 10;
+            this.redundancyLabel.Text = "0";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label7.Location = new System.Drawing.Point(9, 110);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(92, 17);
+            this.label7.TabIndex = 9;
+            this.label7.Text = "Redundancy:";
+            // 
+            // maxEntropyLabel
+            // 
+            this.maxEntropyLabel.AutoSize = true;
+            this.maxEntropyLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.maxEntropyLabel.Location = new System.Drawing.Point(126, 88);
+            this.maxEntropyLabel.Name = "maxEntropyLabel";
+            this.maxEntropyLabel.Size = new System.Drawing.Size(16, 17);
+            this.maxEntropyLabel.TabIndex = 8;
+            this.maxEntropyLabel.Text = "0";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label6.Location = new System.Drawing.Point(9, 88);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(122, 17);
+            this.label6.TabIndex = 7;
+            this.label6.Text = "Maximum entropy:";
             // 
             // entropyLabel
             // 
@@ -183,7 +225,7 @@
             // 
             // calculateButton
             // 
-            this.calculateButton.Location = new System.Drawing.Point(312, 287);
+            this.calculateButton.Location = new System.Drawing.Point(312, 311);
             this.calculateButton.Name = "calculateButton";
             this.calculateButton.Size = new System.Drawing.Size(75, 23);
             this.calculateButton.TabIndex = 0;
@@ -195,7 +237,7 @@
             // 
             this.groupBox2.Controls.Add(this.histogramCheckBox);
             this.groupBox2.Controls.Add(this.saveToClipboardButton);
-            this.groupBox2.Location = new System.Drawing.Point(12, 231);
+            this.groupBox2.Location = new System.Drawing.Point(12, 255);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(375, 50);
             this.groupBox2.TabIndex = 11;
@@ -212,51 +254,23 @@
             this.saveToClipboardButton.UseVisualStyleBackColor = true;
             this.saveToClipboardButton.Click += new System.EventHandler(this.saveToClipboardButton_Click);
             // 
-            // maxEntropyLabel
+            // roundUpCheckBox
             // 
-            this.maxEntropyLabel.AutoSize = true;
-            this.maxEntropyLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.maxEntropyLabel.Location = new System.Drawing.Point(126, 88);
-            this.maxEntropyLabel.Name = "maxEntropyLabel";
-            this.maxEntropyLabel.Size = new System.Drawing.Size(16, 17);
-            this.maxEntropyLabel.TabIndex = 8;
-            this.maxEntropyLabel.Text = "0";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label6.Location = new System.Drawing.Point(9, 88);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(122, 17);
-            this.label6.TabIndex = 7;
-            this.label6.Text = "Maximum entropy:";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label7.Location = new System.Drawing.Point(9, 110);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(92, 17);
-            this.label7.TabIndex = 9;
-            this.label7.Text = "Redundancy:";
-            // 
-            // redundancyLabel
-            // 
-            this.redundancyLabel.AutoSize = true;
-            this.redundancyLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.redundancyLabel.Location = new System.Drawing.Point(97, 110);
-            this.redundancyLabel.Name = "redundancyLabel";
-            this.redundancyLabel.Size = new System.Drawing.Size(16, 17);
-            this.redundancyLabel.TabIndex = 10;
-            this.redundancyLabel.Text = "0";
+            this.roundUpCheckBox.AutoSize = true;
+            this.roundUpCheckBox.Checked = true;
+            this.roundUpCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.roundUpCheckBox.Location = new System.Drawing.Point(12, 135);
+            this.roundUpCheckBox.Name = "roundUpCheckBox";
+            this.roundUpCheckBox.Size = new System.Drawing.Size(106, 17);
+            this.roundUpCheckBox.TabIndex = 9;
+            this.roundUpCheckBox.Text = "Round up results";
+            this.roundUpCheckBox.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(406, 322);
+            this.ClientSize = new System.Drawing.Size(406, 344);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.fileGroupBox);
@@ -295,6 +309,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label maxEntropyLabel;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.CheckBox roundUpCheckBox;
     }
 }
 
