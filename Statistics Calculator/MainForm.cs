@@ -48,6 +48,8 @@ namespace Statistics_Calculator
             totalCharCountLabel.Text = _lastResult.TotalCount.ToString();
             charCountLabel.Text = _lastResult.UniqueCount.ToString();
             entropyLabel.Text = _lastResult.Entropy.ToString(CultureInfo.InvariantCulture);
+            maxEntropyLabel.Text = _lastResult.MaxEntropy.ToString(CultureInfo.InvariantCulture);
+            redundancyLabel.Text = _lastResult.Redundancy.ToString(CultureInfo.InvariantCulture) + "%";
 
             if (histogramCheckBox.Checked)
             {

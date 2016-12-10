@@ -21,13 +21,24 @@ namespace Statistics_Calculator
             long totalCount = inputStream.Length;
             inputStream.Close();
 
+            int uniqueCount = occurences.Where(i => i > 0).Count();
+            double entropy = GetEntropy(probabilities);
+            double maxEntropy = Math.Log(uniqueCount, 2);
+
             return new Result
             {
                 TotalCount = totalCount,
-                UniqueCount = occurences.Where(i => i > 0).Count(),
-                Entropy = GetEntropy(probabilities),
+                UniqueCount = uniqueCount,
+                Entropy = entropy,
+                MaxEntropy = maxEntropy,
+                Redundancy = GetRedundancy(entropy, maxEntropy),
                 Probabilities = probabilities
             };
+        }
+
+        private double GetRedundancy(double entropy, double maxEntropy)
+        {
+            return (1 - entropy/maxEntropy) * 100;
         }
 
         private double GetProbability(int value)
@@ -45,16 +56,5 @@ namespace Statistics_Calculator
 
             return entropy;
         }
-    }
-
-    public class Result
-    {
-        public long TotalCount { get; set; }
-
-        public long UniqueCount { get; set; }
-
-        public double Entropy { get; set; }
-
-        public IEnumerable<double> Probabilities { get; set; }
     }
 }

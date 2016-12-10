@@ -33,16 +33,20 @@
             this.pathLabel = new System.Windows.Forms.Label();
             this.chooseFileButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.histogramCheckBox = new System.Windows.Forms.CheckBox();
             this.entropyLabel = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.totalCharCountLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.charCountLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.histogramCheckBox = new System.Windows.Forms.CheckBox();
             this.calculateButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.saveToClipboardButton = new System.Windows.Forms.Button();
+            this.maxEntropyLabel = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.redundancyLabel = new System.Windows.Forms.Label();
             this.fileGroupBox.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -90,6 +94,10 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.redundancyLabel);
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.maxEntropyLabel);
+            this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.entropyLabel);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.totalCharCountLabel);
@@ -98,20 +106,10 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(12, 85);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(381, 91);
+            this.groupBox1.Size = new System.Drawing.Size(381, 140);
             this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Statistics";
-            // 
-            // histogramCheckBox
-            // 
-            this.histogramCheckBox.AutoSize = true;
-            this.histogramCheckBox.Location = new System.Drawing.Point(6, 19);
-            this.histogramCheckBox.Name = "histogramCheckBox";
-            this.histogramCheckBox.Size = new System.Drawing.Size(145, 17);
-            this.histogramCheckBox.TabIndex = 7;
-            this.histogramCheckBox.Text = "Generate and save to file";
-            this.histogramCheckBox.UseVisualStyleBackColor = true;
             // 
             // entropyLabel
             // 
@@ -173,9 +171,19 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Unique characters:";
             // 
+            // histogramCheckBox
+            // 
+            this.histogramCheckBox.AutoSize = true;
+            this.histogramCheckBox.Location = new System.Drawing.Point(6, 19);
+            this.histogramCheckBox.Name = "histogramCheckBox";
+            this.histogramCheckBox.Size = new System.Drawing.Size(145, 17);
+            this.histogramCheckBox.TabIndex = 7;
+            this.histogramCheckBox.Text = "Generate and save to file";
+            this.histogramCheckBox.UseVisualStyleBackColor = true;
+            // 
             // calculateButton
             // 
-            this.calculateButton.Location = new System.Drawing.Point(312, 238);
+            this.calculateButton.Location = new System.Drawing.Point(312, 287);
             this.calculateButton.Name = "calculateButton";
             this.calculateButton.Size = new System.Drawing.Size(75, 23);
             this.calculateButton.TabIndex = 0;
@@ -187,7 +195,7 @@
             // 
             this.groupBox2.Controls.Add(this.histogramCheckBox);
             this.groupBox2.Controls.Add(this.saveToClipboardButton);
-            this.groupBox2.Location = new System.Drawing.Point(12, 182);
+            this.groupBox2.Location = new System.Drawing.Point(12, 231);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(375, 50);
             this.groupBox2.TabIndex = 11;
@@ -204,11 +212,51 @@
             this.saveToClipboardButton.UseVisualStyleBackColor = true;
             this.saveToClipboardButton.Click += new System.EventHandler(this.saveToClipboardButton_Click);
             // 
+            // maxEntropyLabel
+            // 
+            this.maxEntropyLabel.AutoSize = true;
+            this.maxEntropyLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.maxEntropyLabel.Location = new System.Drawing.Point(126, 88);
+            this.maxEntropyLabel.Name = "maxEntropyLabel";
+            this.maxEntropyLabel.Size = new System.Drawing.Size(16, 17);
+            this.maxEntropyLabel.TabIndex = 8;
+            this.maxEntropyLabel.Text = "0";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label6.Location = new System.Drawing.Point(9, 88);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(122, 17);
+            this.label6.TabIndex = 7;
+            this.label6.Text = "Maximum entropy:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label7.Location = new System.Drawing.Point(9, 110);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(92, 17);
+            this.label7.TabIndex = 9;
+            this.label7.Text = "Redundancy:";
+            // 
+            // redundancyLabel
+            // 
+            this.redundancyLabel.AutoSize = true;
+            this.redundancyLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.redundancyLabel.Location = new System.Drawing.Point(97, 110);
+            this.redundancyLabel.Name = "redundancyLabel";
+            this.redundancyLabel.Size = new System.Drawing.Size(16, 17);
+            this.redundancyLabel.TabIndex = 10;
+            this.redundancyLabel.Text = "0";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(406, 271);
+            this.ClientSize = new System.Drawing.Size(406, 322);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.fileGroupBox);
@@ -243,6 +291,10 @@
         private System.Windows.Forms.CheckBox histogramCheckBox;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button saveToClipboardButton;
+        private System.Windows.Forms.Label redundancyLabel;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label maxEntropyLabel;
+        private System.Windows.Forms.Label label6;
     }
 }
 
