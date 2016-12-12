@@ -1,7 +1,7 @@
 ﻿using CryptZip.Compression;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace CryptZip.Tests
+namespace CryptZip.Tests.Compression
 {
     [TestClass]
     public class BitConverterTests

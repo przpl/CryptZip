@@ -8,7 +8,7 @@ using System.IO;
 namespace CryptZip.Tests
 {
     [TestClass]
-    public class FullPackerTests // MOCKING !!!
+    public class FullPackerTests
     {
         private List<string> _events = new List<string>();
 
